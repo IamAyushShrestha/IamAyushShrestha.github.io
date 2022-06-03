@@ -1174,7 +1174,7 @@ xclip
 
 .participate-wrap:hover figure figcaption {
 	top: 50%;
-	opacity: 1;
+	opacity: 0;
 }
 
 .service-widget h3 a,
@@ -1478,6 +1478,7 @@ hr.invis1 {
 
 .gallery-list .gallery-single:hover .img-overlay .hoverbutton{
 	opacity: 1;
+    background: none;
 	top: 50%;
 }
 
