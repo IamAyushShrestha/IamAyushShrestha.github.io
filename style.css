@@ -2027,7 +2027,42 @@ select.mobile-device {
 
 
 /*# sourceMappingURL=bootstrap-select.css.map */
+/* Style all font awesome icons */
+.fa {
+    padding: 20px;
+    font-size: 30px;
+    width: 50px;
+    text-align: center;
+    text-decoration: none;
+  }
+  
+  /* Add a hover effect if you want */
+  .fa:hover {
+    opacity: 0.7;
+  }
+  
+  /* Set a specific color for each brand */
+  
+  /* Facebook */
+  .fa-facebook {
+    background: #3B5998;
+    color: white;
+  }
+  
+  /* LinkedIn*/
+  .fa-linkedin {
+    background: #007bb5;
+    color: white;
+  }
 
+.connect{
+    color: #fff;
+	display: table-cell;
+	vertical-align: middle;
+	position: relative;
+	z-index: 1;
+}
+  <!-- ------------------------>
 .bootstrap-select > .btn {
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
     font-size: 15px;
