@@ -1,556 +1,719 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <!-- Basic -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">   
-   
-    <!-- Mobile Metas -->
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
- 
-     <!-- Site Metas -->
-    <title>Ayush Shrestha - Portfolio</title>  
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Site Icons -->
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <!--=============== FAVICON ===============-->
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <!-- Site CSS -->
-    <link rel="stylesheet" href="style.css">
-    <!-- Responsive CSS -->
-    <link rel="stylesheet" href="css/responsive.css">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/custom.css">
-	<script src="js/modernizr.js"></script> <!-- Modernizr -->
 
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <!--=============== BOXICONS ===============-->
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
 
+    <!--=============== SWIPER CSS ===============-->
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="assets/css/styles.css">
+
+    <title> Ayush's Portfolio </title>
 </head>
-<body id="page-top" class="politics_version">
 
-    <!-- LOADER -->
-    <div id="preloader">
-        <div id="main-ld">
-			<div id="loader"></div>  
-		</div>
-    </div><!-- end loader -->
-    <!-- END LOADER -->
-	
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-      <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">
-			<img class="img-fluid" src="images/logo.png" alt="" />
-		</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          Menu
-          <i class="fa fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav text-uppercase ml-auto">
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger active" href="#home">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#about">About Me</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#services">What I can Do..</a>
-            </li>
- <!--           <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#testimonials">Testimonials</a>
-            </li>
-			<li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#blog">Blog</a>
-            </li>-->
-			<li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#contact">Contact Me</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-	
-	<section id="home" class="main-banner parallaxie" style="background: url('uploads/banner-01.jpg')">
-		<div class="heading">
-			<h1>hello i'm Ayush Shrestha</h1>
-			<p>"Software Engineer based in Chicago, Illinois <br>Currently a Software Engineer - PC Programmer at Elettric80 Inc."</p>
-			<h3 class="cd-headline clip is-full-width">
-				<span>Some Experience and Interested in</span>
-				<span class="cd-words-wrapper">
-					<b class="is-visible">Software / WebApp Development</b>
-					<b>Machine Learning</b>
-					<!-- <b>Artificial Intelligence</b>-->
-					<!-- <b>WebApp Development</b>-->
-                    <b>Business Software Solutions</b>
-				</span>
-			</h3>
-		</div>
-	</section>
+<body>
+    <!--=============== HEADER ===============-->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="#" class="nav__logo">Ayush</a>
 
-	<svg id="clouds" class="hidden-xs" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100" viewBox="0 0 85 100" preserveAspectRatio="none">
-        <path d="M-5 100 Q 0 20 5 100 Z
-            M0 100 Q 5 0 10 100
-            M5 100 Q 10 30 15 100
-            M10 100 Q 15 10 20 100
-            M15 100 Q 20 30 25 100
-            M20 100 Q 25 -10 30 100
-            M25 100 Q 30 10 35 100
-            M30 100 Q 35 30 40 100
-            M35 100 Q 40 10 45 100
-            M40 100 Q 45 50 50 100
-            M45 100 Q 50 20 55 100
-            M50 100 Q 55 40 60 100
-            M55 100 Q 60 60 65 100
-            M60 100 Q 65 50 70 100
-            M65 100 Q 70 20 75 100
-            M70 100 Q 75 45 80 100
-            M75 100 Q 80 30 85 100
-            M80 100 Q 85 20 90 100
-            M85 100 Q 90 50 95 100
-            M90 100 Q 95 25 100 100
-            M95 100 Q 100 15 105 100 Z">
-        </path>
-    </svg>
+            <div class="nav__menu">
+                <ul class="nav__list">
+                    <li class="nav__item ">
+                        <a href="#home" class="nav__link">
+                            <i class='bx bx-home'></i>
+                        </a>
+                    </li>
 
-    <div id="about" class="section wb">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="message-box">                        
-                        <h2>About Ayush!</h2>
-                        <p>Orginated from a small nation - Nepal, I have had a great opportunity to enhance my knowledge of technology since my childhood.
-                             Playing games on PC was so much fun, then I got exposed to programming language in High School and instantly felt a good vibe to
-                              know about software systems and that PC wasn't just for playing games but opens door to innovation and real world problem solving. 
-                              Talking about extra activities- recently started to learn to play Guitar, Currently serving as a Board Member (Treasurer) 
-                              at my Condo Association and also a MBA graduate. </p>
-						<!-- <p>To know more about me in a formal way you can view and save my Resume.</p> -->
+                    <li class="nav__item ">
+                        <a href="#about" class="nav__link">
+                            <i class='bx bx-user'></i>
+                        </a>
+                    </li>
 
-                        <!-- <a href="uploads/AyushShresthaResumed.pdf" class="sim-btn btn-hover-new" data-text="View Resume" target="_blank" ><span>View Resume</span></a> -->
-                    </div><!-- end messagebox -->
-                </div><!-- end col -->
+                    <li class="nav__item">
+                        <a href="#skills" class="nav__link">
+                            <i class='bx bx-book'></i>
+                        </a>
+                    </li>
 
-                <div class="col-md-6">
-                    <div class="right-box-pro wow fadeIn">
-                        <img src="uploads/about_04.jpg" alt="" class="img-fluid img-rounded">
-                    </div><!-- end media -->
-                </div><!-- end col -->
-            </div><!-- end row -->
-        </div><!-- end container -->
-    </div><!-- end section -->
-	
-    <div id="services" class="section lb">
-        <div class="container">
-            <div class="section-title text-left">
-                <h3>What I can Do..</h3>
-                <p>Following are few Technology Stack I worked with recently -</p>
-            </div><!-- end title -->
+                    <li class="nav__item">
+                        <a href="#work" class="nav__link">
+                            <i class='bx bx-briefcase-alt-2'></i>
+                        </a>
+                    </li>
 
-            <div class="col-md-6 col-xs-11 wow fadeInRight" data-wow-delay="0.9s">
-                <span class="text-top">JAVA</span>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                    </div>
-                <span>C#</span>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                    </div>
-                <span>Python</span>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                    </div>
-                    <span>C++ </span>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                    </div>
-                    <span>SQL</span>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                    </div>
-                    <span>JAVASCRIPT</span>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                    </div>
-                    <span>REACT</span>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                    </div>
-                    <span>Node.js</span>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                    </div>
-                    <span>.NET FRAMEWORK</span>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                    </div>
-                <span>HTLM5 &AMP; CSS3 </span>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                    </div>
+                    <li class="nav__item">
+                        <a href="#contact" class="nav__link">
+                            <i class='bx bx-message-square-dots'></i>
+                        </a>
+                    </li>
+                </ul>
             </div>
-	
-	<div id="portfolio" class="section lb">
-		<div class="container">
-			<div class="section-title text-left">
-                <h3>Portfolio</h3>
-                <!-- <p>Comprises of Academic and others</p>-->
-            </div><!-- end title -->
-			
-			<div class="gallery-menu row">
-				<div class="col-md-12">
-					<div class="button-group filter-button-group text-left">
-						<button class="active" data-filter="*">All</button>
-						<button data-filter=".gal_a">Short Projects</button>
-						<button data-filter=".gal_b">Creative Design</button>
-						<button data-filter=".gal_c">Graphic Design</button>
-					</div>
-				</div>
-			</div>
-			
-			<div class="gallery-list row">
-				<div class="col-md-4 col-sm-6 gallery-grid gal_a gal_b">
-					<div class="gallery-single fix">
-						<img src="uploads/gallery_img-01.jpg" class="img-fluid" alt="Github">
-						<div class="img-overlay">
-							<a href="https://github.com/IamAyushShrestha/Aeroplane-Seat-project---java"  class="hoverbutton global-radius"><i>Github</i></a>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-md-4 col-sm-6 gallery-grid gal_c gal_b">
-					<div class="gallery-single fix">
-						<img src="uploads/gallery_img-02.jpg" class="img-fluid" alt="Github">
-						<div class="img-overlay">
-							<a href="https://github.com/IamAyushShrestha/WebPageManchesterUnited" class="hoverbutton global-radius"><i>Github</i></a>
-						</div>
-					</div>
-				</div>
-		<!--		
-				<div class="col-md-4 col-sm-6 gallery-grid gal_a gal_c">
-					<div class="gallery-single fix">
-						<img src="uploads/gallery_img-03.jpg" class="img-fluid" alt="Github">
-						<div class="img-overlay">
-							<a href="uploads/gallery_img-03.jpg" data-rel="prettyPhoto[gal]" class="hoverbutton global-radius"><i>Github</i></a>
-						</div>
-					</div>
-				</div>-->	
-				
-				<div class="col-md-4 col-sm-6 gallery-grid gal_b gal_a">
-					<div class="gallery-single fix">
-						<img src="uploads/gallery_img-04.jpg" class="img-fluid" alt="Github">
-						<div class="img-overlay">
-							<a href="https://github.com/IamAyushShrestha/Morse-Code-Translation---Java" class="hoverbutton global-radius"><i>Github</i></a>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-md-4 col-sm-6 gallery-grid gal_a gal_c">
-					<div class="gallery-single fix">
-						<img src="uploads/gallery_img-05.jpg" class="img-fluid" alt="Github">
-						<div class="img-overlay">
-							<a href="https://github.com/IamAyushShrestha/Carbon-FootPrint--Java" class="hoverbutton global-radius"><i>Github</i></a>
-						</div>
-					</div>
-				</div>
-				
-		<!--	<div class="col-md-4 col-sm-6 gallery-grid gal_c gal_a">
-					<div class="gallery-single fix">
-						<img src="uploads/gallery_img-06.jpg" class="img-fluid" alt="Image">
-						<div class="img-overlay">
-							<a href="uploads/gallery_img-06.jpg" data-rel="prettyPhoto[gal]" class="hoverbutton global-radius"><i class="fa fa-picture-o"></i></a>
-						</div>
-					</div>
-				</div> -->	
-			</div>
-			</div>
-		</div>
-	</div>
 
-<!--	 <div id="testimonials" class="section wb">
-        <div class="container">
-            <div class="section-title text-left">
-                <h3>Testimonials</h3>
-                <p>We thanks for all our awesome testimonials! There are hundreds of our happy customers! </p>
-            </div><!-- end title -->
+            <!--=============== theme change button ===============-->
+            <i class='bx bx-moon change-theme change-theme-button' id="theme-button"></i>
 
-  <!--          <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="testi-carousel owl-carousel owl-theme">
-                        <div class="testimonial clearfix">
-                            <div class="desc">
-                                <h3><i class="fa fa-quote-left"></i> Wonderful Support!</h3>
-                                <p class="lead">They have got my project on time with the competition with a sed highly skilled, and experienced & professional team.</p>
-                            </div>
-                            <div class="testi-meta">
-                                <img src="uploads/testi_01.png" alt="" class="img-fluid alignleft">
-                                <h4>James Fernando <small>- Manager of Racer</small></h4>
-                            </div>
-                            <!-- end testi-meta -->
- <!--                       </div>
-                        <!-- end testimonial -->
+        </nav>
+    </header>
 
- <!--                       <div class="testimonial clearfix">
-                            <div class="desc">
-                                <h3><i class="fa fa-quote-left"></i> Awesome Services!</h3>
-                                <p class="lead">Explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you completed.</p>
-                            </div>
-                            <div class="testi-meta">
-                                <img src="uploads/testi_02.png" alt="" class="img-fluid alignleft">
-                                <h4>Jacques Philips <small>- Designer</small></h4>
-                            </div>
-                            <!-- end testi-meta -->
- <!--                       </div>
-                        <!-- end testimonial -->
+    <!--=============== MAIN ===============-->
+    <main class="main">
+        <!--=============== HOME ===============-->
+        <section class="home section" id="home">
+            <div class="home__container container grid">
+                <div class="home__data">
+                    <span class="home__greeting">Hello, I'm</span>
+                    <h1 class="home__name">Ayush Shrestha</h1>
+                    <h3 class="home__education">Software Engineer based in Chicago, Illinois </h3>
 
- <!--                       <div class="testimonial clearfix">
-                            <div class="desc">
-                                <h3><i class="fa fa-quote-left"></i> Great & Talented Team!</h3>
-                                <p class="lead">The master-builder of human happines no one rejects, dislikes avoids pleasure itself, because it is very pursue pleasure. </p>
-                            </div>
-                            <div class="testi-meta">
-                                <img src="uploads/testi_03.png" alt="" class="img-fluid alignleft">
-                                <h4>Venanda Mercy <small>- Newyork City</small></h4>
-                            </div>
-                            <!-- end testi-meta -->
- <!--                       </div>
-  <!--                      <!-- end testimonial -->
-  <!--                      <div class="testimonial clearfix">
-                            <div class="desc">
-                                <h3><i class="fa fa-quote-left"></i> Wonderful Support!</h3>
-                                <p class="lead">They have got my project on time with the competition with a sed highly skilled, and experienced & professional team.</p>
-                            </div>
-                            <div class="testi-meta">
-                                <img src="uploads/testi_01.png" alt="" class="img-fluid alignleft">
-                                <h4>James Fernando <small>- Manager of Racer</small></h4>
-                            </div>
-                            <!-- end testi-meta -->
-  <!--                      </div>
-                        <!-- end testimonial -->
-
-  <!--                      <div class="testimonial clearfix">
-                            <div class="desc">
-                                <h3><i class="fa fa-quote-left"></i> Awesome Services!</h3>
-                                <p class="lead">Explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you completed.</p>
-                            </div>
-                            <div class="testi-meta">
-                                <img src="uploads/testi_02.png" alt="" class="img-fluid alignleft">
-                                <h4>Jacques Philips <small>- Designer</small></h4>
-                            </div>
-                            <!-- end testi-meta -->
-  <!--                      </div>
-                        <!-- end testimonial -->
-
-  <!--                      <div class="testimonial clearfix">
-                            <div class="desc">
-                                <h3><i class="fa fa-quote-left"></i> Great & Talented Team!</h3>
-                                <p class="lead">The master-builder of human happines no one rejects, dislikes avoids pleasure itself, because it is very pursue pleasure. </p>
-                            </div>
-                            <div class="testi-meta">
-                                <img src="uploads/testi_03.png" alt="" class="img-fluid alignleft">
-                                <h4>Venanda Mercy <small>- Newyork City</small></h4>
-                            </div>
-                            <!-- end testi-meta -->
- <!--                       </div><!-- end testimonial -->
- <!--                   </div><!-- end carousel -->
- <!--               </div><!-- end col -->
- <!--           </div><!-- end row -->
- <!--       </div><!-- end container -->
- <!--   </div><!-- end section -->
-	
-<!--	<div id="blog" class="section lb">
-		<div class="container">
-			<div class="section-title text-left">
-                <h3>Blog</h3>
-                <p>Quisque eget nisl id nulla sagittis auctor quis id. Aliquam quis vehicula enim, non aliquam risus.</p>
-            </div><!-- end title -->
-			
-<!--			<div class="row">
-				<div class="col-md-4 col-sm-6 col-lg-4">
-					<div class="post-box">
-						<div class="post-thumb">
-							<img src="uploads/blog-01.jpg" class="img-fluid" alt="post-img" />
-							<div class="date">
-								<span>06</span>
-								<span>Aug</span>
-							</div>
-						</div>
-						<div class="post-info">
-							<h4>Quisque auctor lectus interdum nisl accumsan venenatis.</h4>
-							<ul>
-                                <li>by admin</li>
-                                <li>Apr 21, 2018</li>
-                                <li><a href="#"><b> Comments</b></a></li>
-                            </ul>
-							<p>Etiam materials ut mollis tellus, vel posuere nulla. Etiam sit amet massa sodales aliquam at eget quam. Integer ultricies et magna quis.</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-6 col-lg-4">
-					<div class="post-box">
-						<div class="post-thumb">
-							<img src="uploads/blog-02.jpg" class="img-fluid" alt="post-img" />
-							<div class="date">
-								<span>06</span>
-								<span>Aug</span>
-							</div>
-						</div>
-						<div class="post-info">
-							<h4>Quisque auctor lectus interdum nisl accumsan venenatis.</h4>
-							<ul>
-                                <li>by admin</li>
-                                <li>Apr 21, 2018</li>
-                                <li><a href="#"><b> Comments</b></a></li>
-                            </ul>
-							<p>Etiam materials ut mollis tellus, vel posuere nulla. Etiam sit amet massa sodales aliquam at eget quam. Integer ultricies et magna quis.</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-6 col-lg-4">
-					<div class="post-box">
-						<div class="post-thumb">
-							<img src="uploads/blog-03.jpg" class="img-fluid" alt="post-img" />
-							<div class="date">
-								<span>06</span>
-								<span>Aug</span>
-							</div>
-						</div>
-						<div class="post-info">
-							<h4>Quisque auctor lectus interdum nisl accumsan venenatis.</h4>
-							<ul>
-                                <li>by admin</li>
-                                <li>Apr 21, 2018</li>
-                                <li><a href="#"><b> Comments</b></a></li>
-                            </ul>
-							<p>Etiam materials ut mollis tellus, vel posuere nulla. Etiam sit amet massa sodales aliquam at eget quam. Integer ultricies et magna quis.</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-		</div>
-	</div> -->
-
-    <div id="contact" class="section db">
-        <div class="container">
-            <div class="section-title text-left">
-                <h3>Connect</h3>
-               <!-- <p>Quisque eget nisl id nulla sagittis auctor quis id. Aliquam quis vehicula enim, non aliquam risus.</p>-->
-            </div><!-- end title -->
-           <!-- <div align="center">
-                <a href="https://m.facebook.com/100001023409645/" class="fa fa-facebook" target="_blank"> </a>
-                <a href="https://www.linkedin.com/in/ayush-shrestha-a52a38163/" class="fa fa-linkedin" target="_blank"></a>
-                <p style="color:rgb(37, 37, 105)">Connect via Email at:<br>-->
-                    <div align="center">
-                    <a href="mailto:se.ayushshr@gmail.com" style="color:white" >Email:iamAyushShrestha</a></p>
-
-
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" align="right">
-
-            <!-- Add font awesome icons -->
-           
-            <div id="wrapper-9cd199b9cc5410cd3b1ad21cab2e54d3">
-                <div id="map-9cd199b9cc5410cd3b1ad21cab2e54d3"></div><script>(function () {
-                var setting = {"height":250,"width":350,"zoom":10,"queryString":"5220 Oakton Street, Skokie, IL, USA","place_id":"ChIJbefvMj3PD4gRuMPiPYtibww","satellite":false,"centerCoord":[42.026817314312176,-87.75860499999999],"cid":"0xc6f628b3de2c3b8","lang":"en","cityUrl":"/us/il/chicago","cityAnchorText":"Map of Chicago, Illinois, United States","id":"map-9cd199b9cc5410cd3b1ad21cab2e54d3","embed_id":"809999"};
-                var d = document;
-                var s = d.createElement('script');
-                s.src = 'https://1map.com/js/script-for-user.js?embed_id=809999';
-                s.async = true;
-                s.onload = function (e) {
-                  window.OneMap.initMap(setting)
-                };
-                var to = d.getElementsByTagName('script')[0];
-                to.parentNode.insertBefore(s, to);
-              })();</script><a href="https://1map.com/map-embed">1 Map</a>
-              
-            </div></div>
-            
-
-
-
-            <!-- <div class="row">
-                <div class="col-md-12">
-                    <div class="contact_form">
-                        <div id="message"></div>
-                        <form id="contactForm" name="sentMessage" novalidate="novalidate">
-							<div class="row">
-								<div class="col-md-6">
-									<div class="form-group">
-										<input class="form-control" id="name" type="text" placeholder="Your Name" required="required" data-validation-required-message="Please enter your name.">
-										<p class="help-block text-danger"></p>
-									</div>
-									<div class="form-group">
-										<input class="form-control" id="email" type="email" placeholder="Your Email" required="required" data-validation-required-message="Please enter your email address.">
-										<p class="help-block text-danger"></p>
-									</div>
-									<div class="form-group">
-										<input class="form-control" id="phone" type="tel" placeholder="Your Phone" required="required" data-validation-required-message="Please enter your phone number.">
-										<p class="help-block text-danger"></p>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<textarea class="form-control" id="message" placeholder="Your Message" required="required" data-validation-required-message="Please enter a message."></textarea>
-										<p class="help-block text-danger"></p>
-									</div>
-								</div>
-								<div class="clearfix"></div>
-								<div class="col-lg-12 text-center">
-									<div id="success"></div>
-									<button id="sendMessageButton" class="sim-btn btn-hover-new" data-text="Send Message" type="submit" href="mailto:iamayushshrestha@gmail.com">Send Message</button>
-								</div>
-							</div>
-						</form>
+                    <div class="home__button">
+                       <!-- <a download="" href="assets/pdf/AyushShresthaResumed.pdf" class="button button--ghost">
+                            Download CV
+                        </a> -->
+                        <a href="assets/pdf/AyushShresthaResumed.pdf" class="button button--ghost" data-text="View Resume" target="_blank" ><span>View Resume</span></a>
+                        <a href="#about" class="button">About</a>
                     </div>
-                </div><!-- end col -->
-            </div><!-- end row -->
-        </div><!-- end container -->
-    </div><!-- end section -->
+                </div>
 
-    <div class="copyrights">
-        <div class="container">
-            <div class="footer-distributed">
-                <div class="footer-left">
-                    <p class="footer-links">
-                        <a href="#">Home</a>
-                        <!-- <a href="#">Blog</a>
-                        <a href="#">Pricing</a> -->
-                        <a href="#">About</a>
-                        <!-- <a href="#">Faq</a> -->
-                        <a href="#">Contact</a>
+                <div class="home__handle">
+                    <img src="assets/img/perfil.png" alt="" class="home__img">
+                </div>
+
+                <div class="home__social">
+                    <a href="https://www.linkedin.com/in/ayush-shrestha-a52a38163/" target="_blank" class="home__social-link">
+                        <i class='bx bxl-linkedin'></i>
+                    </a>
+                    <a href="#" target="_blank" class="home__social-link">
+                        <i class='bx bxl-github'></i>
+                    </a>
+                    <a href="#" target="_blank" class="home__social-link">
+                        <i class='bx bxl-dribbble'></i>
+                    </a>
+                </div>
+
+                <a href="#about" class="home__scroll">
+                    <i class='bx bx-mouse home__scroll-icon'></i>
+                    <span class="home__scroll-name">Scroll Down</span>
+                </a>
+            </div>
+        </section>
+
+        <!--=============== ABOUT ===============-->
+        <section class="about section" id="about">
+            <span class="section__subtitle">My Intro</span>
+            <h2 class="section__title">About Me</h2>
+
+            <div class="about__container container grid">
+                <img src="assets/img/about.jpg" alt="" class="about__img">
+
+                <div class="about__data">
+                    <div class="about__info">
+                        <div class="about__box">
+                            <i class='bx bx-award about__icon'></i>
+                            <h3 class="about__title">Experience</h3>
+                            <span class="about__subtitle">4 Years Working</span>
+                        </div>
+                        <div class="about__box">
+                            <i class='bx bx-briefcase-alt about__icon'></i>
+                            <h3 class="about__title">Completed</h3>
+                            <span class="about__subtitle">48+ Projects</span>
+                        </div>
+                        <div class="about__box">
+                            <i class='bx bx-support about__icon'></i>
+                            <h3 class="about__title">Support</h3>
+                            <span class="about__subtitle">Online 24/7</span>
+                        </div>
+                    </div>
+
+                    <p class="about__description">
+                        Full stack Software Engineer. I create business solutions to enhance efficiency and solve business logic problems.
                     </p>
-                    <p class="footer-company-name">All Rights Reserved. &copy; 2022 <a href="#">Ayush</a> Design By : 
-					<a href="https://html.design/">Ayush Shrestha</a></p>
+
+                    <a href="#contact" class="button about__button-contact">Contact Me</a>
                 </div>
             </div>
-        </div><!-- end container -->
-    </div><!-- end copyrights -->
+        </section>
 
-    <a href="#" id="scroll-to-top" class="dmtop global-radius"><i class="fa fa-angle-up"></i></a>
+        <!--=============== SKILLS ===============-->
+        <section class="skills section" id="skills">
+            <span class="section__subtitle">My Abilities</span>
+            <h2 class="section__title">My Experience</h2>
 
-    <!-- ALL JS FILES -->
-    <script src="js/all.js"></script>
-	<!-- Camera Slider -->
-	<script src="js/jquery.mobile.customized.min.js"></script>
-	<script src="js/jquery.easing.1.3.js"></script> 
-	<script src="js/parallaxie.js"></script>
-	<script src="js/headline.js"></script>
-	<!-- Contact form JavaScript -->
-    <script src="js/jqBootstrapValidation.js"></script>
-    <script src="js/contact_me.js"></script>
-    <!-- ALL PLUGINS -->
-    <script src="js/custom.js"></script>
-    <script src="js/jquery.vide.js"></script>
+            <div class="skills__container container grid">
+                <div class="skills__content">
+                    <h3 class="skills__title">Frontend Development</h3>
 
+                    <div class="skills__box">
+                        <div class="skills__group">
+                            <div class="skills__data">
+                                <i class='bx bxs-badge-check'></i>
+
+                                <div>
+                                    <h3 class="skills__name">HTML</h3>
+                                    <span class="skills__level">Advanced</span>
+                                </div>
+                            </div>
+
+                            <div class="skills__data">
+                                <i class='bx bxs-badge-check'></i>
+
+                                <div>
+                                    <h3 class="skills__name">CSS/SCSS</h3>
+                                    <span class="skills__level">Advanced</span>
+                                </div>
+                            </div>
+
+                            <div class="skills__data">
+                                <i class='bx bxs-badge-check'></i>
+
+                                <div>
+                                    <h3 class="skills__name">Javascript</h3>
+                                    <span class="skills__level">Intermediate</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="skills__group">
+                            <div class="skills__data">
+                                <i class='bx bxs-badge-check'></i>
+
+                                <div>
+                                    <h3 class="skills__name">Bootstrap</h3>
+                                    <span class="skills__level">Intermediate</span>
+                                </div>
+                            </div>
+
+                            <div class="skills__data">
+                                <i class='bx bxs-badge-check'></i>
+
+                                <div>
+                                    <h3 class="skills__name">Git</h3>
+                                    <span class="skills__level">Advanced</span>
+                                </div>
+                            </div>
+
+                            <div class="skills__data">
+                                <i class='bx bxs-badge-check'></i>
+
+                                <div>
+                                    <h3 class="skills__name">React</h3>
+                                    <span class="skills__level">Intermediate</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skills__content">
+                    <h3 class="skills__title">Backend Development</h3>
+
+                    <div class="skills__box">
+                        <div class="skills__group">
+                            <div class="skills__data">
+                                <i class='bx bxs-badge-check'></i>
+
+                                <div>
+                                    <h3 class="skills__name">Node JS</h3>
+                                    <span class="skills__level">Advanced</span>
+                                </div>
+                            </div>
+
+                            <div class="skills__data">
+                                <i class='bx bxs-badge-check'></i>
+
+                                <div>
+                                    <h3 class="skills__name">Python</h3>
+                                    <span class="skills__level">Intermediate</span>
+                                </div>
+                            </div>
+
+                            <div class="skills__data">
+                                <i class='bx bxs-badge-check'></i>
+
+                                <div>
+                                    <h3 class="skills__name">SQL</h3>
+                                    <span class="skills__level">Advanced</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="skills__group">
+                            <div class="skills__data">
+                                <i class='bx bxs-badge-check'></i>
+
+                                <div>
+                                    <h3 class="skills__name">Java</h3>
+                                    <span class="skills__level">Intermediate</span>
+                                </div>
+                            </div>
+
+                            <div class="skills__data">
+                                <i class='bx bxs-badge-check'></i>
+
+                                <div>
+                                    <h3 class="skills__name">Firebase</h3>
+                                    <span class="skills__level">Advanced</span>
+                                </div>
+                            </div>
+
+                            <div class="skills__data">
+                                <i class='bx bxs-badge-check'></i>
+
+                                <div>
+                                    <h3 class="skills__name">C# .Net</h3>
+                                    <span class="skills__level">Advanced</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+        <!--=============== SERVICES ===============-->
+        <section class="services section">
+            <span class="section__subtitle">My Services</span>
+            <h2 class="section__title">What I Offer</h2>
+
+            <div class="services__container container grid">
+                <div class="services__card">
+                    <div class="serv">
+                        <h3 class="services__title">Product <br> Designing</h3>
+
+                        <span class="services__button">
+                            See More <i class='bx bx-right-arrow services__icon'></i>
+                        </span>
+                    </div>
+
+
+                    <div class="services__modal">
+                        <div class="services__modal-content">
+                            <i class='bx bx-x services__modal-close'></i>
+
+                            <h3 class="services__modal-title">Product Designing</h3>
+
+                            <p class="services__modal-description">
+                                I design and develop the consumer products with creative ability and
+                                hands-on approach which stisfies the customers' and markets' needs and trends.
+                            </p>
+
+                            <ul class="services__modal-list">
+                                <li class="services__modal-item">
+                                    <i class='bx bx-check-circle'></i>
+                                    <p class="services__modal-info">
+                                        I develop the user interfaces.
+                                    </p>
+                                </li>
+
+                                <li class="services__modal-item">
+                                    <i class='bx bx-check-circle'></i>
+                                    <p class="services__modal-info">
+                                        Web Page design and development.
+                                    </p>
+                                </li>
+
+                                <li class="services__modal-item">
+                                    <i class='bx bx-check-circle'></i>
+                                    <p class="services__modal-info">
+                                        I create the UX element interactions.
+                                    </p>
+                                </li>
+
+                                <li class="services__modal-item">
+                                    <i class='bx bx-check-circle'></i>
+                                    <p class="services__modal-info">
+                                        I position your company brand.
+                                    </p>
+                                </li>
+
+                                <li class="services__modal-item">
+                                    <i class='bx bx-check-circle'></i>
+                                    <p class="services__modal-info">
+                                        Create modern 3-D experiences.
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="services__card">
+                    <h3 class="services__title">UI/UX <br> Designing</h3>
+
+                    <span class="services__button">
+                        See More <i class='bx bx-right-arrow services__icon'></i>
+                    </span>
+
+                    <div class="services__modal">
+                        <div class="services__modal-content">
+                            <i class='bx bx-x services__modal-close'></i>
+
+                            <h3 class="services__modal-title">UI/UX Designing</h3>
+
+                            <p class="services__modal-description">
+                                I design and develop the consumer products with creative ability and
+                                hands-on approach which stisfies the customers' and markets' needs and trends.
+                            </p>
+
+                            <ul class="services__modal-list">
+                                <li class="services__modal-item">
+                                    <i class='bx bx-check-circle'></i>
+                                    <p class="services__modal-info">
+                                        I develop the user interfaces.
+                                    </p>
+                                </li>
+
+                                <li class="services__modal-item">
+                                    <i class='bx bx-check-circle'></i>
+                                    <p class="services__modal-info">
+                                        Web Page design and development.
+                                    </p>
+                                </li>
+
+                                <li class="services__modal-item">
+                                    <i class='bx bx-check-circle'></i>
+                                    <p class="services__modal-info">
+                                        I create the UX element interactions.
+                                    </p>
+                                </li>
+
+                                <li class="services__modal-item">
+                                    <i class='bx bx-check-circle'></i>
+                                    <p class="services__modal-info">
+                                        I position your company brand.
+                                    </p>
+                                </li>
+
+                                <li class="services__modal-item">
+                                    <i class='bx bx-check-circle'></i>
+                                    <p class="services__modal-info">
+                                        Create modern 3-D experiences.
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="services__card">
+                    <h3 class="services__title">Visual <br> Designing</h3>
+
+                    <span class="services__button">
+                        See More <i class='bx bx-right-arrow services__icon'></i>
+                    </span>
+
+                    <div class="services__modal">
+                        <div class="services__modal-content">
+                            <i class='bx bx-x services__modal-close'></i>
+
+                            <h3 class="services__modal-title">Visual Designing</h3>
+
+                            <p class="services__modal-description">
+                                I design and develop the consumer products with creative ability and
+                                hands-on approach which stisfies the customers' and markets' needs and trends.
+                            </p>
+
+                            <ul class="services__modal-list">
+                                <li class="services__modal-item">
+                                    <i class='bx bx-check-circle'></i>
+                                    <p class="services__modal-info">
+                                        I develop the user interfaces.
+                                    </p>
+                                </li>
+
+                                <li class="services__modal-item">
+                                    <i class='bx bx-check-circle'></i>
+                                    <p class="services__modal-info">
+                                        Web Page design and development.
+                                    </p>
+                                </li>
+
+                                <li class="services__modal-item">
+                                    <i class='bx bx-check-circle'></i>
+                                    <p class="services__modal-info">
+                                        I create the UX element interactions.
+                                    </p>
+                                </li>
+
+                                <li class="services__modal-item">
+                                    <i class='bx bx-check-circle'></i>
+                                    <p class="services__modal-info">
+                                        I position your company brand.
+                                    </p>
+                                </li>
+
+                                <li class="services__modal-item">
+                                    <i class='bx bx-check-circle'></i>
+                                    <p class="services__modal-info">
+                                        Create modern 3-D experiences.
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--=============== WORK ===============-->
+        <section class="work section" id="work">
+            <span class="section__subtitle">My Portfolio</span>
+            <h2 class="section__title">Recent Works</h2>
+
+            <div class="work__filters">
+                <span class="work__item active-work" data-filter='all'>All</span>
+                <span class=" work__item" data-filter='.web'>Web</span>
+                <span class=" work__item" data-filter='.movil'>Movil</span>
+                <span class=" work__item" data-filter='.design'>Design</span>
+            </div>
+
+            <div class="work__container container grid">
+                <div class="work__card mix web">
+                    <img src="assets/img/work1.jpg" alt="" class="work__img">
+
+                    <h3 class="work__title">Web Design</h3>
+
+                    <a href="#" class="work__button">
+                        Demo <i class='bx bx-right-arrow work__icon'></i>
+                    </a>
+                </div>
+
+                <div class="work__card mix movil">
+                    <img src="assets/img/work2.jpg" alt="" class="work__img">
+
+                    <h3 class="work__title">App Movil</h3>
+
+                    <a href="#" class="work__button">
+                        Demo <i class='bx bx-right-arrow work__icon'></i>
+                    </a>
+                </div>
+
+                <div class="work__card mix design">
+                    <img src="assets/img/work3.jpg" alt="" class="work__img">
+
+                    <h3 class="work__title">Brand Design</h3>
+
+                    <a href="#" class="work__button">
+                        Demo <i class='bx bx-right-arrow work__icon'></i>
+                    </a>
+                </div>
+
+                <div class="work__card mix web">
+                    <img src="assets/img/work4.jpg" alt="" class="work__img">
+
+                    <h3 class="work__title">Web Design</h3>
+
+                    <a href="#" class="work__button">
+                        Demo <i class='bx bx-right-arrow work__icon'></i>
+                    </a>
+                </div>
+
+                <div class="work__card mix movil">
+                    <img src="assets/img/work5.jpg" alt="" class="work__img">
+
+                    <h3 class="work__title">App Movil</h3>
+
+                    <a href="#" class="work__button">
+                        Demo <i class='bx bx-right-arrow work__icon'></i>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!--=============== TESTIMONIALS ===============-->
+       <!-- <section class="testimonial section">
+            <span class="section__subtitle">My clients say</span>
+            <h2 class="section__title">Testimonials</h2>
+
+            <div class="testimonial__container container swiper">
+                <div class="swiper-wrapper">
+                    <div class="testimonial__card swiper-slide">
+                        <img src="assets/img/testimonial1.png" alt="" class="testimonial__img">
+
+                        <h3 class="testimonial__name">Jhon Doe</h3>
+                        <p class="testimonial__description">
+                            A really good job, all aspects of the project were done well.
+                            Very creative and thoughtful. I was very impressed and would recommend this to anyone.
+                        </p>
+                    </div>
+
+                    <div class="testimonial__card swiper-slide">
+                        <img src="assets/img/testimonial2.png" alt="" class="testimonial__img">
+
+                        <h3 class="testimonial__name">Ada Hill</h3>
+                        <p class="testimonial__description">
+                            A really good job, all aspects of the project were done well.
+                            Very creative and thoughtful. I was very impressed and would recommend this to anyone.
+                        </p>
+                    </div>
+
+                    <div class="testimonial__card swiper-slide">
+                        <img src="assets/img/testimonial3.png" alt="" class="testimonial__img">
+
+                        <h3 class="testimonial__name">Jessica Park</h3>
+                        <p class="testimonial__description">
+                            A really good job, all aspects of the project were done well.
+                            Very creative and thoughtful. I was very impressed and would recommend this to anyone.
+                        </p>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+
+        </section>-->
+
+        <!--=============== CONTACT ===============-->
+        <section class="contact section" id="contact">
+            <sapn class="section__subtitle">Get in touch</sapn>
+            <h3 class="section__title">Contact Me</h3>
+
+            <div class="contact__container container grid">
+                <div class="contact__content">
+                    <h3 class="contact__title contact__title-info">Talk to me</h3>
+
+                    <div class="contact__info">
+                        <div class="contact__card">
+                            <i class='bx bx-mail-send contact__card-icon'></i>
+                            <h3 class="contact__card-title">Email</h3>
+                            <span class="contact__card-data">iamayushshrestha@gmail.com</span>
+
+                            <a href="mailto:iamayushshrestha@gmail.com" target="_blank" class="contact__button">
+                                Write Me <i class='bx bx-right-arrow contact__button-icon'></i>
+                            </a>
+                        </div>
+
+                        <!-- <div class="contact__card">
+                            <i class='bx bxl-whatsapp contact__card-icon'></i>
+                            <h3 class="contact__card-title">Whatsapp</h3>
+                            <span class="contact__card-data">6969696969</span>
+
+                            <a href="https://api.whatsapp.com/send?phone=+916969696969&text=Hey there!" target="_blank"
+                                class="contact__button">
+                                Write Me <i class='bx bx-right-arrow contact__button-icon'></i>
+                            </a>
+                        </div> 
+
+                         <div class="contact__card">
+                            <i class='bx bxl-twitter contact__card-icon'></i>
+                            <h3 class="contact__card-title">Twitter</h3>
+                            <span class="contact__card-data">usertw</span>
+
+                            <a href="https://twitter.com/usertw" target="_blank" class="contact__button">
+                                Write Me <i class='bx bx-right-arrow contact__button-icon'></i>
+                            </a>
+                        </div>-->
+                    </div>
+                </div>
+
+                <div class="contact__content">
+                    <h3 class="contact__title contact__title-form">Write Me your Message</h3>
+
+                    <form action="" class="contact__form">
+                        <div class="contact__form-div">
+                            <label for="" class="contact__form-tag">Name</label>
+                            <input type="text" placeholder="Enter name" class="contact__form-input">
+                        </div>
+
+                        <div class="contact__form-div">
+                            <label for="" class="contact__form-tag">Mail</label>
+                            <input type="text" placeholder="Enter email" class="contact__form-input">
+                        </div>
+
+                        <div class="contact__form-div contact__form-area">
+                            <label for="" class="contact__form-tag">Message</label>
+                            <textarea name="" id="" cols="30" rows="10" placeholder="Write your Message"
+                                class="contact__form-input "></textarea>
+                        </div>
+
+
+                        <button class="button">
+                            Send Message
+                        </button>
+                    </form>
+
+                </div>
+
+        </section>
+    </main>
+
+    <!--=============== FOOTER ===============-->
+    <footer class="footer">
+        <div class="footer__container container">
+            <h1 class="footer__title">Ayush</h1>
+
+            <ul class="footer__list">
+
+                <li class="footer__item">
+                    <a href="#" class="footer__link">Home</a>
+                </li>
+                <li class="footer__item">
+                    <a href="#about" class="footer__link">About</a>
+                </li>
+                <li class="footer__item">
+                    <a href="#skills" class="footer__link">Skills</a>
+                </li>
+                <li class="footer__item">
+                    <a href="#work" class="footer__link">Work</a>
+                </li>
+                <li class="footer__item">
+                    <a href="#contact" class="footer__link">Contact</a>
+                </li>
+            </ul>
+
+            <ul class="footer__social">
+                <li class="footer__social-item">
+                    <a href="#" target="_blank" class="footer__social-link">
+                        <i class='bx bxl-facebook footer__social-icon'></i>
+                    </a>
+                </li>
+                <li class="footer__social-item">
+                    <a href="#" target="_blank" class="footer__social-link">
+                        <i class='bx bxl-twitter footer__social-icon'></i>
+                    </a>
+                </li>
+                <li class="footer__social-item">
+                    <a href="https://www.linkedin.com/in/ayush-shrestha-a52a38163/" target="_blank" class="footer__social-link">
+                        <i class='bx bxl-linkedin footer__social-icon'></i>
+                    </a>
+                </li>
+                <li class="footer__social-item">
+                    <a href="#" target="_blank" class="footer__social-link">
+                        <i class='bx bxl-instagram footer__social-icon'></i>
+                    </a>
+                </li>
+            </ul>
+
+            <span class="footer__copy">
+                &#169; 2022 S44WN. All rights reserved.
+            </span>
+        </div>
+    </footer>
+
+    <!--=============== SCROLLREVEAL ===============-->
+
+    <!-- <script src="assets/js/scrollreveal.min.js"></script> -->
+    <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
+
+    <!--=============== SWIPER JS ===============-->
+    <script src="assets/js/swiper-bundle.min.js"></script>
+
+    <!--=============== MIXITUP FILTER ===============-->
+    <script src="assets/js/mixitup.min.js"></script>
+
+    <!--=============== MAIN JS ===============-->
+    <script src="assets/js/main.js"></script>
 </body>
+
 </html>
