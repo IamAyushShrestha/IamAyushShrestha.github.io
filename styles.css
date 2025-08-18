@@ -1,0 +1,242 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Zen Dots', 'Courier New', monospace;
+  color: #fff;
+  background: black;
+  opacity: 0.98;
+  overflow: hidden;
+
+ 
+
+}
+
+.matrix-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.65;
+}
+
+header {
+  text-align: center;
+  padding: 50px 20px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  margin: 20px auto;
+  width: fit-content;
+  animation: fadeIn 2s ease-in-out;
+}
+
+header h1 {
+  font-size: 3rem;
+  margin: 0;
+}
+
+header p {
+  font-size: 1.2rem;
+  margin: 10px 0 0;
+  color: #0F0;
+}
+
+.red-pill {
+  color: #ff3333;
+  text-shadow: 0 0 2px #ff0000, 0 0 2px #ff3333;
+}
+
+main {
+  padding: 20px;
+  text-align: center;
+}
+
+section {
+  margin-bottom: 40px;
+  animation: fadeIn 2s ease-in-out;
+}
+
+.skills-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.skill {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 1rem;
+  animation: slideIn 1s ease-in-out;
+}
+
+.landing-container {
+  display: flex;
+  flex-direction: column;       /* stack sections vertically */
+  justify-content: center;      /* vertical center */
+  align-items: center;          /* horizontal center */
+  min-height: 20vh;            /* full viewport height */
+  width: 100%;
+}
+
+.redpill, .experience, .education {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 900px;
+  text-align: center;
+  margin: 10px 0;
+  font-weight: 400;    /* normal weight */
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  line-height: 1.6;
+
+  font-family: 'Orbitron', 'Courier New', monospace;
+}
+
+a {
+  color: #0F0;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.matrix-buttons {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.matrix-red,
+.matrix-blue {
+  font-family: 'Zen Dots', monospace;
+  font-size: 20px;
+  padding: 15px 40px;
+  margin: 15px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Zen Dots', 'Courier New', monospace;
+}
+
+/* Red Pill Glow */
+.matrix-red {
+  color: #ff0000;
+  background: #000;
+  box-shadow: 0 0 10px #ff0000, 0 0 20px #ff3333, 0 0 40px #ff6666;
+}
+
+.matrix-red:hover {
+  box-shadow: 0 0 20px #ff0000, 0 0 40px #ff3333, 0 0 60px #ff6666;
+  transform: scale(1.1);
+}
+
+/* Blue Pill Glow */
+.matrix-blue {
+  color: #00ffff;
+  background: #000;
+  box-shadow: 0 0 10px #00ffff, 0 0 20px #33ffff, 0 0 40px #66ffff;
+}
+
+.matrix-blue:hover {
+  box-shadow: 0 0 20px #00ffff, 0 0 40px #33ffff, 0 0 60px #66ffff;
+  transform: scale(1.1);
+}
+
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+footer a {
+  color: #0F0;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/*=============== SCROLL BAR ===============*/
+::-webkit-scrollbar {
+  width: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 1.5rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #FFD700;
+  border-radius: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #FFA500;
+}
+
+.social-links {
+  display: flex;
+  gap: 20px; /* space between icons */
+  justify-content: center; /* center on page */
+  margin-top: 20px;
+}
+
+.social-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  color: #00ff00; /* Matrix green */
+  border: 2px solid #00ff00;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.social-links a:hover {
+  background-color: #00ff00;
+  color: black;
+  transform: scale(1.1);
+  box-shadow: 0 0 15px #00ff00;
+}
+
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
