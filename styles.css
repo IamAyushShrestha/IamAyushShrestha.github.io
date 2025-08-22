@@ -1,7 +1,7 @@
 /* Ensure the body and html take up the full height of the viewport */
 body, html {
   margin: 0;
-  padding-top: 100px;
+  padding-top: 55px;
   font-family: 'Zen Dots', 'Courier New', monospace;
   color: #fff;
   background: black;
