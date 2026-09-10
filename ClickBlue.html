@@ -3,55 +3,189 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blue Pill - Ayush Shrestha</title>
-  <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <meta name="description" content="The blue pill — a streamlined summary. Ayush Shrestha, Full Stack Developer.">
+  <title>Blue Pill | Ayush Shrestha</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;600;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Blue-pill world overrides */
+    body.blue-world .matrix-canvas { opacity: 0.4; }
+    body.blue-world .hud-corner { border-color: var(--matrix-teal); }
+    body.blue-world .nav-logo,
+    body.blue-world .nav-link:hover,
+    body.blue-world .nav-link.active { color: var(--matrix-teal); text-shadow: 0 0 10px rgba(0, 229, 255, 0.6); }
+    body.blue-world .nav-link::after { background: var(--matrix-teal); box-shadow: 0 0 10px rgba(0, 229, 255, 0.6); }
+    body.blue-world .section-title { text-shadow: 0 0 20px rgba(0, 229, 255, 0.4); }
+    body.blue-world .section-line { background: linear-gradient(90deg, transparent, var(--matrix-teal), transparent); box-shadow: 0 0 10px rgba(0, 229, 255, 0.6); }
+    body.blue-world .accent { color: var(--matrix-teal); text-shadow: 0 0 8px rgba(0, 229, 255, 0.5); }
+    body.blue-world .btn-primary { background: var(--matrix-teal); color: #000; box-shadow: 0 0 20px rgba(0, 229, 255, 0.4); }
+    body.blue-world .btn-ghost { color: var(--matrix-teal); border-color: var(--matrix-teal); }
+    body.blue-world .btn-ghost:hover { background: rgba(0, 229, 255, 0.1); box-shadow: 0 0 30px rgba(0, 229, 255, 0.3); }
+    body.blue-world .terminal-card,
+    body.blue-world .stat-card,
+    body.blue-world .skill-card,
+    body.blue-world .contact-card { border-color: rgba(0, 229, 255, 0.25); }
+    body.blue-world .terminal-card:hover,
+    body.blue-world .contact-card:hover { border-color: var(--matrix-teal); box-shadow: 0 0 30px rgba(0, 229, 255, 0.2); }
+    body.blue-world .term-cmd,
+    body.blue-world .stat-number,
+    body.blue-world .skill-icon,
+    body.blue-world .contact-card i { color: var(--matrix-teal); text-shadow: 0 0 10px rgba(0, 229, 255, 0.6); }
+    body.blue-world .skill-bar-fill { background: linear-gradient(90deg, #003b5c, var(--matrix-teal)); box-shadow: 0 0 10px var(--matrix-teal); }
+    body.blue-world .footer-name { color: var(--matrix-teal); text-shadow: 0 0 10px rgba(0, 229, 255, 0.6); }
+    body.blue-world .footer-links a { color: var(--matrix-teal); }
+    body.blue-world .hud-status { color: var(--matrix-teal); border-color: rgba(0, 229, 255, 0.25); }
+    body.blue-world .hero-role,
+    body.blue-world .typed-cursor { color: var(--matrix-teal); text-shadow: 0 0 8px rgba(0, 229, 255, 0.5); }
+    body.blue-world .hero-prompt { color: rgba(0, 229, 255, 0.6); }
+    body.blue-world .status-dot { background: var(--matrix-teal); box-shadow: 0 0 8px var(--matrix-teal); }
+    body.blue-world .pill-blue { border-color: rgba(0, 229, 255, 0.5); box-shadow: 0 0 40px rgba(0, 229, 255, 0.15); }
+    body.blue-world .pill-blue .pill-title { color: var(--matrix-teal); }
+    body.blue-world .scroll-indicator { color: rgba(0, 229, 255, 0.6); }
+    body.blue-world .scroll-mouse { border-color: rgba(0, 229, 255, 0.6); }
+    body.blue-world .scroll-wheel { background: var(--matrix-teal); }
+    body.blue-world .nav.scrolled { border-bottom-color: rgba(0, 229, 255, 0.25); }
+  </style>
 </head>
-<body>
-  <div class="matrix-background"></div>
-  <header>
-    <a href="index.html" style="text-decoration: none; color: inherit;">
-      <h1>Ayush Shrestha</h1>
-    </a>
-    <p>Full Stack Developer | Based in Chicago, Illinois</p>
-  </header>
+<body class="blue-world">
+
+  <!-- Preloader -->
+  <div class="preloader" id="preloader">
+    <div class="preloader-text">
+      <span class="preloader-line">Ignorance is bliss...</span>
+      <span class="preloader-line preloader-line-2">Loading the comfortable reality.</span>
+      <div class="preloader-bar"><div class="preloader-bar-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- Matrix Rain Canvas -->
+  <canvas id="matrix-canvas" class="matrix-canvas"></canvas>
+
+  <!-- Scanline / CRT overlay -->
+  <div class="crt-overlay"></div>
+
+  <!-- HUD corners -->
+  <div class="hud-corner hud-tl"></div>
+  <div class="hud-corner hud-tr"></div>
+  <div class="hud-corner hud-bl"></div>
+  <div class="hud-corner hud-br"></div>
+
+  <!-- HUD status bar -->
+  <div class="hud-status">
+    <span class="hud-status-item" id="hud-time">--:--:--</span>
+    <span class="hud-status-item hud-status-pulse">COMFORT MODE</span>
+    <span class="hud-status-item">BLUE://REALITY</span>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <a href="index.html" class="nav-logo">A<span class="nav-logo-accent">S</span></a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html" class="nav-link active">Home</a></li>
+      <li><a href="index.html#about" class="nav-link">About</a></li>
+      <li><a href="index.html#skills" class="nav-link">Skills</a></li>
+      <li><a href="index.html#choice" class="nav-link">The Choice</a></li>
+      <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+    </ul>
+  </nav>
+
   <main>
-    <div class="landing-container">
-      
-      <div class="redpill">
-        <p>
-          This is the world as it is presented to you. A streamlined summary without the complex truth. Are you ready to go deeper? The red pill awaits.
+    <!-- ============ HERO ============ -->
+    <section id="hero" class="hero section">
+      <div class="hero-content">
+        <p class="hero-eyebrow reveal">// SYSTEM BOOT: COMFORT MODE</p>
+        <h1 class="hero-name glitch reveal" data-text="THE BLUE PILL">THE BLUE PILL</h1>
+        <div class="hero-role reveal reveal-delay-1">
+          <span class="hero-prompt">&gt;</span>
+          <span id="typed-text" class="typed-text"></span>
+          <span class="typed-cursor">_</span>
+        </div>
+        <p class="hero-tagline reveal reveal-delay-2">
+          This is the world as it is presented to you. A streamlined summary without the
+          complex truth. Everything is <span class="accent">simple</span>, everything is
+          <span class="accent">comfortable</span>.
         </p>
+        <div class="hero-actions reveal reveal-delay-3">
+          <a href="index.html#choice" class="btn btn-primary">Take the Red Pill <i class='bx bx-chevron-left'></i></a>
+          <a href="pdf/Ayush_Shrestha_SoftwareDeveloper_Resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">View Resume <i class='bx bx-file'></i></a>
+        </div>
       </div>
-    </div>
-    <div class="matrix-buttons">
-      <!-- Red Pill (opens resume) -->
-      <a href="pdf/Ayush_Shrestha_SoftwareDeveloper_Resume.pdf" target="_blank" rel="noopener noreferrer">
-        <button class="matrix-red" data-tooltip="See my RESUME">Red Pill</button>
-      </a>
-    </div>
+      <div class="scroll-indicator reveal reveal-delay-3">
+        <span>SCROLL</span>
+        <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+      </div>
+    </section>
+
+    <!-- ============ THE COMFORTABLE SUMMARY ============ -->
+    <section id="summary" class="section about">
+      <div class="section-header reveal">
+        <span class="section-tag">// 01</span>
+        <h2 class="section-title">THE_SUMMARY</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="about-grid">
+        <div class="about-card terminal-card reveal">
+          <div class="terminal-bar">
+            <span class="terminal-dot red"></span>
+            <span class="terminal-dot yellow"></span>
+            <span class="terminal-dot green"></span>
+            <span class="terminal-title">summary.sh</span>
+          </div>
+          <div class="terminal-body">
+            <p><span class="term-cmd">$ cat reality.txt</span></p>
+            <p class="term-out">
+              Ayush Shrestha is a Software Developer at E80 Group in Chicago, Illinois. He
+              builds and supports warehouse automation software — C#/.NET features, SQL Server
+              performance, and ERP integrations — where LGVs and conveyors run 24/7. No rabbit
+              holes, no red pills — just solid engineering, clear communication, and dependable
+              results.
+            </p>
+            <p><span class="term-cmd">$ ./check --depth</span></p>
+            <p class="term-out">
+              Everything is fine. The code works. The bugs are patched. There is nothing
+              hidden beneath the surface. You can go back to your comfortable reality now.
+            </p>
+            <p><span class="term-cmd">$ ./status --current</span></p>
+            <p class="term-out term-status"><span class="status-dot"></span> Everything is fine.</p>
+          </div>
+        </div>
+        <div class="about-stats reveal reveal-delay-1">
+          <div class="stat-card">
+            <span class="stat-number" data-count="5">0</span><span class="stat-plus">+</span>
+            <span class="stat-label">Years Coding</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number" data-count="20">0</span><span class="stat-plus">+</span>
+            <span class="stat-label">Projects Built</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number" data-count="0">0</span><span class="stat-plus">%</span>
+            <span class="stat-label">Matrix Awareness</span>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
-  <footer>
-    <div class="social-links">
-      <a href="https://www.linkedin.com/in/ayush-shrestha-a52a38163/" target="_blank">
-        <i class='bx bxl-linkedin'></i>
-      </a>
-      <a href="https://github.com/yourusername" target="_blank">
-        <i class='bx bxl-github'></i>
-      </a>
-      <a href="https://www.instagram.com/aaeynimal" target="_blank">
-        <i class='bx bxl-instagram'></i>
-      </a>
-      <a href="mailto:iamayushshrestha@gmail.com" target="_blank">
-        <i class='bx bxl-gmail'></i>
-      </a>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <p class="footer-name">AYUSH SHRESTHA</p>
+      <p class="footer-copy">© <span id="year">2025</span> Ayush Shrestha. All rights reserved.</p>
+      <p class="footer-links">
+        <a href="mailto:iamayushshrestha@gmail.com">Contact</a>
+        <span class="footer-sep">|</span>
+        <a href="pdf/Ayush_Shrestha_SoftwareDeveloper_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
+      </p>
+      <p class="footer-matrix">"You take the blue pill — the story ends."</p>
     </div>
-    <p>© 2025 Ayush Shrestha. All rights reserved.</p>
-    <p><a href="#privacy">Privacy Policy</a> | <a href="#terms">Terms of Service</a> | <a href="mailto:iamayushshrestha@gmail.com">Contact</a></p>
   </footer>
+
   <script src="script.js"></script>
 </body>
 </html>

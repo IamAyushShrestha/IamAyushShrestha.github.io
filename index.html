@@ -3,64 +3,249 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio - Ayush Shrestha</title>
-  <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+  <meta name="description" content="Ayush Shrestha — Full Stack Developer based in Chicago. Take the red pill and see the code.">
+  <title>Ayush Shrestha | Full Stack Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;600;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="matrix-background"></div>
-  <header>
-    <a href="index.html" style="text-decoration: none; color: inherit;">
-      <h1>Ayush Shrestha</h1>
-    </a>
-    <p>Full Stack Developer | Based in Chicago, Illinois</p>
-  </header>
-  <main>
-    <div class="landing-container">
-      <h1>Take the <span class="red-pill">Red Pill</span>. See the Code.</h1>
-      <div class="redpill">
-        <p>
-          I’ve spent years moving through the digital matrix, where every system is built from ones and zeroes. The blue pill is easy: patch it, hide it, ship it. 
-          The red pill is deeper: understand it, untangle it, and create software that truly works. 
-          Step into the rabbit hole and see how deep the code goes—through bugs, logic, and breakthroughs.
-        </p>
-      </div>
-    </div>
-  </main>
-  
-  <div class="matrix-buttons">
-    <!-- Red Pill (opens resume) -->
-    <a href="pdf/Ayush_Shrestha_SoftwareDeveloper_Resume.pdf" target="_blank" rel="noopener noreferrer">
-      <button class="matrix-red" data-tooltip="See my RESUME">Red Pill</button>
-    </a>
 
-    <!-- Blue Pill (links to new page) -->
-    <a href="ClickBlue.html" style="text-decoration: none; color: inherit;">
-      <button class="matrix-blue" data-tooltip="">Blue Pill</button>
-    </a>
+  <!-- Preloader -->
+  <div class="preloader" id="preloader">
+    <div class="preloader-text">
+      <span class="preloader-line">Wake up...</span>
+      <span class="preloader-line preloader-line-2">The Matrix has you.</span>
+      <div class="preloader-bar"><div class="preloader-bar-fill"></div></div>
+    </div>
   </div>
 
-  <footer>
-    <div class="social-links">
-      <a href="https://www.linkedin.com/in/ayush-shrestha-a52a38163/" target="_blank">
-        <i class='bx bxl-linkedin'></i>
-      </a>
-      <a href="https://github.com/yourusername" target="_blank">
-        <i class='bx bxl-github'></i>
-      </a>
-      <a href="https://www.instagram.com/aaeynimal" target="_blank">
-        <i class='bx bxl-instagram'></i>
-      </a>
-      <a href="mailto:iamayushshrestha@gmail.com" target="_blank">
-        <i class='bx bxl-gmail'></i>
-      </a>
+  <!-- Matrix Rain Canvas -->
+  <canvas id="matrix-canvas" class="matrix-canvas"></canvas>
+
+  <!-- Scanline / CRT overlay -->
+  <div class="crt-overlay"></div>
+
+  <!-- HUD corners -->
+  <div class="hud-corner hud-tl"></div>
+  <div class="hud-corner hud-tr"></div>
+  <div class="hud-corner hud-bl"></div>
+  <div class="hud-corner hud-br"></div>
+
+  <!-- HUD status bar -->
+  <div class="hud-status">
+    <span class="hud-status-item" id="hud-time">--:--:--</span>
+    <span class="hud-status-item hud-status-pulse">SYSTEM ONLINE</span>
+    <span class="hud-status-item">NEO://CHICAGO</span>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <a href="#hero" class="nav-logo">A<span class="nav-logo-accent">S</span></a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#hero" class="nav-link active">Home</a></li>
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#skills" class="nav-link">Skills</a></li>
+      <li><a href="#choice" class="nav-link">The Choice</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <!-- ============ HERO ============ -->
+    <section id="hero" class="hero section">
+      <div class="hero-content">
+        <p class="hero-eyebrow reveal">// SYSTEM BOOT: IDENTITY LOADED</p>
+        <h1 class="hero-name glitch" data-text="AYUSH SHRESTHA">AYUSH SHRESTHA</h1>
+        <div class="hero-role">
+          <span class="hero-prompt">&gt;</span>
+          <span id="typed-text" class="typed-text"></span>
+          <span class="typed-cursor">_</span>
+        </div>
+        <p class="hero-tagline reveal reveal-delay-1">
+          Full Stack Developer based in <span class="accent">Chicago, Illinois</span>.
+          I navigate the digital matrix — untangling bugs, logic, and breakthroughs.
+        </p>
+        <div class="hero-actions reveal reveal-delay-2">
+          <a href="#choice" class="btn btn-primary">Enter the Matrix <i class='bx bx-chevron-down'></i></a>
+          <a href="pdf/Ayush_Shrestha_SoftwareDeveloper_Resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">View Resume <i class='bx bx-file'></i></a>
+        </div>
+      </div>
+      <div class="scroll-indicator reveal reveal-delay-3">
+        <span>SCROLL</span>
+        <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+      </div>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section id="about" class="section about">
+      <div class="section-header reveal">
+        <span class="section-tag">// 01</span>
+        <h2 class="section-title">ABOUT_ME</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="about-grid">
+        <div class="about-card terminal-card reveal">
+          <div class="terminal-bar">
+            <span class="terminal-dot red"></span>
+            <span class="terminal-dot yellow"></span>
+            <span class="terminal-dot green"></span>
+            <span class="terminal-title">about_ayush.sh</span>
+          </div>
+          <div class="terminal-body">
+            <p><span class="term-cmd">$ whoami</span></p>
+            <p class="term-out">Software Developer — E80 Group · Chicago, IL</p>
+            <p><span class="term-cmd">$ cat philosophy.txt</span></p>
+            <p class="term-out">
+              I build and support warehouse automation software where LGVs, palletizers, and
+              conveyors run 24/7. I work across the full stack — C#/.NET application features,
+              SQL Server performance, ERP integrations, and production troubleshooting. The
+              blue pill is easy: patch it, hide it, ship it. The red pill is deeper: understand
+              it, untangle it, and create software that truly works.
+            </p>
+            <p><span class="term-cmd">$ ./status --current</span></p>
+            <p class="term-out term-status"><span class="status-dot"></span> Open to new opportunities</p>
+          </div>
+        </div>
+        <div class="about-stats reveal reveal-delay-1">
+          <div class="stat-card">
+            <span class="stat-number" data-count="5">0</span><span class="stat-plus">+</span>
+            <span class="stat-label">Years Coding</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number" data-count="20">0</span><span class="stat-plus">+</span>
+            <span class="stat-label">Projects Built</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number" data-count="100">0</span><span class="stat-plus">%</span>
+            <span class="stat-label">Matrix Awareness</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SKILLS ============ -->
+    <section id="skills" class="section skills">
+      <div class="section-header reveal">
+        <span class="section-tag">// 02</span>
+        <h2 class="section-title">SKILLS_MATRIX</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-card reveal" data-delay="0">
+          <div class="skill-icon"><i class='bx bxl-c-plus-plus'></i></div>
+          <h3>C# / .NET</h3>
+          <p>WMS platform, MVC, Web API, WCF, Windows Services</p>
+          <div class="skill-bar"><div class="skill-bar-fill" data-width="95%"></div></div>
+        </div>
+        <div class="skill-card reveal" data-delay="1">
+          <div class="skill-icon"><i class='bx bxs-data'></i></div>
+          <h3>SQL Server</h3>
+          <p>Stored procs, performance tuning, Always On AG, clustering</p>
+          <div class="skill-bar"><div class="skill-bar-fill" data-width="90%"></div></div>
+        </div>
+        <div class="skill-card reveal" data-delay="2">
+          <div class="skill-icon"><i class='bx bx-transfer-alt'></i></div>
+          <h3>ERP Integrations</h3>
+          <p>SAP, JD Edwards, Manhattan, PrIME via REST/XML</p>
+          <div class="skill-bar"><div class="skill-bar-fill" data-width="88%"></div></div>
+        </div>
+        <div class="skill-card reveal" data-delay="3">
+          <div class="skill-icon"><i class='bx bxs-chip'></i></div>
+          <h3>Industrial Automation</h3>
+          <p>OPC UA/Server, PLC integration, LGV fleet management</p>
+          <div class="skill-bar"><div class="skill-bar-fill" data-width="85%"></div></div>
+        </div>
+        <div class="skill-card reveal" data-delay="4">
+          <div class="skill-icon"><i class='bx bxl-react'></i></div>
+          <h3>Frontend</h3>
+          <p>React, JavaScript, HTML/CSS, Bootstrap</p>
+          <div class="skill-bar"><div class="skill-bar-fill" data-width="82%"></div></div>
+        </div>
+        <div class="skill-card reveal" data-delay="5">
+          <div class="skill-icon"><i class='bx bxl-aws'></i></div>
+          <h3>Cloud & DevOps</h3>
+          <p>Azure, AWS, Docker, Jenkins, Azure DevOps</p>
+          <div class="skill-bar"><div class="skill-bar-fill" data-width="80%"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ THE CHOICE ============ -->
+    <section id="choice" class="section choice">
+      <div class="section-header reveal">
+        <span class="section-tag">// 03</span>
+        <h2 class="section-title">THE_CHOICE</h2>
+        <div class="section-line"></div>
+      </div>
+      <p class="choice-intro reveal">
+        This is your last chance. After this, there is no turning back.<br>
+        <span class="accent">You take the blue pill</span> — the story ends, you wake up in your bed and believe whatever you want to believe.
+        <span class="accent">You take the red pill</span> — you stay in Wonderland, and I show you how deep the rabbit hole goes.
+      </p>
+      <div class="pills reveal reveal-delay-1">
+        <a href="pdf/Ayush_Shrestha_SoftwareDeveloper_Resume.pdf" target="_blank" rel="noopener noreferrer" class="pill pill-red">
+          <span class="pill-glow"></span>
+          <span class="pill-capsule"></span>
+          <span class="pill-title">RED PILL</span>
+          <span class="pill-sub">See my resume — the truth about my code</span>
+        </a>
+        <a href="ClickBlue.html" class="pill pill-blue">
+          <span class="pill-glow"></span>
+          <span class="pill-capsule"></span>
+          <span class="pill-title">BLUE PILL</span>
+          <span class="pill-sub">Stay comfortable — the streamlined summary</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section id="contact" class="section contact">
+      <div class="section-header reveal">
+        <span class="section-tag">// 04</span>
+        <h2 class="section-title">ESTABLISH_LINK</h2>
+        <div class="section-line"></div>
+      </div>
+      <p class="contact-intro reveal">The Matrix has you. But you can reach out — I'm listening.</p>
+      <div class="contact-grid reveal reveal-delay-1">
+        <a href="https://www.linkedin.com/in/ayush-shrestha-a52a38163/" target="_blank" rel="noopener noreferrer" class="contact-card">
+          <i class='bx bxl-linkedin'></i>
+          <span>LinkedIn</span>
+        </a>
+        <a href="https://github.com/IamAyushShrestha" target="_blank" rel="noopener noreferrer" class="contact-card">
+          <i class='bx bxl-github'></i>
+          <span>GitHub</span>
+        </a>
+        <a href="https://www.instagram.com/aaeynimal" target="_blank" rel="noopener noreferrer" class="contact-card">
+          <i class='bx bxl-instagram'></i>
+          <span>Instagram</span>
+        </a>
+        <a href="mailto:iamayushshrestha@gmail.com" class="contact-card">
+          <i class='bx bxl-gmail'></i>
+          <span>Email</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <p class="footer-name">AYUSH SHRESTHA</p>
+      <p class="footer-copy">© <span id="year">2025</span> Ayush Shrestha. All rights reserved.</p>
+      <p class="footer-links">
+        <a href="mailto:iamayushshrestha@gmail.com">Contact</a>
+        <span class="footer-sep">|</span>
+        <a href="pdf/Ayush_Shrestha_SoftwareDeveloper_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
+      </p>
+      <p class="footer-matrix">"There is no spoon." — The Matrix</p>
     </div>
-    <p>© 2025 Ayush Shrestha. All rights reserved.</p>
-    <p><a href="#privacy">Privacy Policy</a> | <a href="#terms">Terms of Service</a> | <a href="mailto:iamayushshrestha@gmail.com">Contact</a></p>
   </footer>
+
   <script src="script.js"></script>
 </body>
 </html>
