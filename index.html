@@ -503,6 +503,122 @@ img{ max-width:100%; }
 .offer1{ --theme:var(--t1); --theme-soft:var(--t1-soft); }
 .offer2{ --theme:var(--t2); --theme-soft:var(--t2-soft); }
 .offer3{ --theme:var(--t3); --theme-soft:var(--t3-soft); }
+.project{ --theme:var(--t1); --theme-soft:var(--t1-soft); }
+
+/* ============================================================
+   6b. PROJECTS SHOWCASE
+   ============================================================ */
+.projects{
+  position:relative;
+  padding:clamp(72px,12vw,150px) clamp(18px,5vw,64px);
+  background:
+    radial-gradient(70% 60% at 15% 0%, rgba(34,197,94,.07), transparent 60%),
+    radial-gradient(70% 60% at 85% 20%, rgba(124,58,237,.07), transparent 60%),
+    var(--bg-soft);
+  border-top:1px solid rgba(255,255,255,.07);
+}
+.projects__head{
+  max-width:1160px; margin:0 auto clamp(38px,5vw,60px);
+}
+.projects__title{
+  font-size:clamp(1.9rem,1.1rem + 3vw,3.2rem);
+  line-height:1.05; font-weight:300; letter-spacing:-.03em;
+  margin-top:16px; text-wrap:balance;
+}
+.projects__sub{ color:var(--text-muted); max-width:52ch; margin-top:16px; }
+
+.project-grid{
+  max-width:1160px; margin-inline:auto;
+  display:grid; gap:clamp(22px,3vw,34px);
+  grid-template-columns:1fr;
+}
+@media (min-width:860px){ .project-grid{ grid-template-columns:repeat(2,1fr); } }
+
+.project{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  background:
+    linear-gradient(165deg, var(--theme-soft), transparent 58%),
+    var(--glass);
+  color:var(--text);
+  border:1px solid var(--hairline);
+  border-radius:var(--r-lg);
+  backdrop-filter:blur(26px) saturate(1.5);
+  -webkit-backdrop-filter:blur(26px) saturate(1.5);
+  box-shadow:0 30px 70px -40px rgba(0,0,0,.85), 0 1px 0 rgba(255,255,255,.10) inset;
+  padding:clamp(26px,3vw,34px);
+  display:flex; flex-direction:column; gap:16px;
+  transition:transform var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+@media (hover:hover){
+  .project:hover{
+    transform:translateY(-4px);
+    border-color:var(--theme);
+    box-shadow:0 40px 80px -40px rgba(0,0,0,.9), 0 1px 0 rgba(255,255,255,.16) inset;
+  }
+}
+.project::before{
+  content:""; position:absolute; inset:0 0 auto 0; height:3px;
+  background:var(--theme);
+}
+.project__media{
+  width:100%; aspect-ratio:16/9;
+  border-radius:var(--r-md);
+  overflow:hidden;
+  background:#060608;
+}
+.project__media img{
+  width:100%; height:100%; object-fit:contain;
+  filter:brightness(.92) contrast(1.04) saturate(.96);
+  transition:transform var(--dur) var(--ease);
+}
+@media (hover:hover){
+  .project:hover .project__media img{ transform:scale(1.02); }
+}
+.project__content{ display:flex; flex-direction:column; gap:12px; }
+.project__kicker{
+  font-size:.68rem; font-weight:600; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--theme);
+}
+.project__name{
+  font-size:1.32rem; font-weight:500; letter-spacing:-.02em;
+  line-height:1.2; color:var(--text);
+}
+.project__desc{
+  font-size:.95rem; line-height:1.6; color:var(--text-soft);
+}
+.project__highlights{
+  display:grid; gap:9px; margin-top:2px;
+}
+.project__highlights li{
+  position:relative; padding-left:22px;
+  font-size:.9rem; color:var(--text-soft);
+}
+.project__highlights li::before{
+  content:""; position:absolute; left:0; top:.62em;
+  width:6px; height:6px; border-radius:50%;
+  background:var(--theme);
+}
+.project__highlights b{ color:var(--text); font-weight:600; }
+.project__links{
+  display:flex; gap:12px; margin-top:8px;
+}
+.project__link{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:.85rem; font-weight:500; color:var(--text-soft);
+  padding:10px 16px; border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.05);
+  text-decoration:none;
+  transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.project__link:hover{
+  background:rgba(34,197,94,.16);
+  border-color:rgba(34,197,94,.4);
+  color:#fff;
+}
+.project__link svg{ width:16px; height:16px; stroke:currentColor; fill:none; }
 
 /* ============================================================
    7. CONTACT
@@ -688,6 +804,7 @@ img{ max-width:100%; }
   <a class="masthead__mark" href="#top"><span class="masthead__dot" aria-hidden="true"></span>Ayush Shrestha</a>
   <nav class="masthead__nav" aria-label="Primary">
     <a href="#offers">What I do</a>
+    <a href="#projects">Projects</a>
     <a href="#contact">Contact</a>
     <a href="https://github.com/iamayushshrestha" target="_blank" rel="noopener noreferrer">GitHub</a>
   </nav>
@@ -948,6 +1065,43 @@ img{ max-width:100%; }
             </ul>
       </article>
 
+    </div>
+  </section>
+
+  <!-- ============ PROJECT SHOWCASE ============ -->
+  <section class="projects" id="projects" aria-label="Projects">
+    <div class="projects__head">
+      <p class="eyebrow"><b>06</b> / Projects</p>
+      <h2 class="projects__title">Selected work.</h2>
+      <p class="projects__sub">
+        A few things I've built — each one solving a real problem with clean, maintainable code.
+      </p>
+    </div>
+
+    <div class="project-grid">
+      <article class="project">
+        <div class="project__media">
+          <img src="assets/Browse-Record.gif" alt="Browse Record demo — screen recording and playback in the browser" width="1280" height="720" loading="lazy">
+        </div>
+        <div class="project__content">
+          <p class="project__kicker">Side project</p>
+          <h3 class="project__name">Browse Record</h3>
+          <p class="project__desc">
+            A lightweight browser extension for recording and replaying browsing sessions. Capture full interactions — clicks, scrolls, form inputs — and play them back for testing, demos, or documentation.
+          </p>
+          <ul class="project__highlights">
+            <li><b>Vanilla JS</b> — no framework overhead, ~15KB gzipped</li>
+            <li><b>Session replay</b> — deterministic playback with RRWeb</li>
+            <li><b>Privacy-first</b> — runs entirely client-side, no data leaves the browser</li>
+          </ul>
+          <div class="project__links">
+            <a class="project__link" href="https://github.com/IamAyushShrestha/Browse-Record" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+              <span>View on GitHub</span>
+            </a>
+          </div>
+        </div>
+      </article>
     </div>
   </section>
 
