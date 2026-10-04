@@ -1,251 +1,1513 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Ayush Shrestha — Full Stack Developer based in Chicago. Take the red pill and see the code.">
-  <title>Ayush Shrestha | Full Stack Developer</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;600;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  <link rel="stylesheet" href="styles.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ayush Shrestha — Software Developer | Warehouse Automation &amp; Enterprise Systems</title>
+<meta name="description" content="Ayush Shrestha — Software Developer in Skokie, IL, specializing in warehouse management systems, enterprise ERP integration, fleet robotics, and applied AI engineering.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0a0a0c">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0a0c'/%3E%3Cpath d='M9 23 15.5 9h1.6L23 23h-2.6l-1.4-3.4h-4.9L12.6 23Z' fill='%23ffffff'/%3E%3Ccircle cx='22.5' cy='9' r='2' fill='%2322c55e'/%3E%3C/svg%3E">
+
+<!-- GSAP first: the bootstrap below feature-detects it before first paint. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<script>
+/* Pre-paint bootstrap. Runs for its side effects only.
+   - .js            : JavaScript is alive
+   - .is-booting    : show the preloader (it is display:none in plain CSS, so a
+                      JS failure can never leave it covering the page)
+   - .is-pinned     : viewport-pinned layout is safe (GSAP present, wide screen,
+                      motion allowed)
+   The failsafe is the important part: if ANY later script throws, the page is
+   still revealed rather than stranded behind a progress bar. */
+(function () {
+  var d = document.documentElement;
+  d.classList.remove('no-js');
+  d.classList.add('js');
+
+  /* ---------- console capture (?audit=1 / ?probe=1 only) ----------
+     The requirement is zero errors AND zero warnings, so the check has to see
+     every channel: thrown errors, unhandled rejections, and console.warn /
+     console.error. Normalised to fixed-width [E]/[W] tokens. */
+  window.__log = [];
+  if (/audit=1|probe=1/.test(location.search + location.hash)) {
+    function note(kind, text) {
+      if (window.__log.length < 40) window.__log.push('[' + kind + ']' + String(text).slice(0, 160));
+    }
+    window.addEventListener('error', function (e) { note('E', e.message || 'error'); }, true);
+    window.addEventListener('unhandledrejection', function (e) { note('E', 'rejection: ' + (e.reason && e.reason.message || e.reason)); });
+    ['error', 'warn'].forEach(function (k) {
+      var orig = console[k];
+      console[k] = function () {
+        note(k === 'warn' ? 'W' : 'E', Array.prototype.map.call(arguments, String).join(' '));
+        if (orig) orig.apply(console, arguments);
+      };
+    });
+  }
+
+  /* Hard reveal no matter what happens downstream. */
+  window.__revealFailsafe = setTimeout(function () {
+    d.classList.add('force-ready');
+    d.classList.remove('is-booting');
+  }, 9000);
+
+  var wide   = window.matchMedia('(min-width: 901px)').matches;
+  /* ?motion=off exists so the reduced-motion branch can be exercised without
+     OS-level media emulation. It forces the same path a user gets. */
+  var reduce = /motion=off/.test(location.search + location.hash);
+  var motion = !reduce && window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+  var gsapOk = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
+  if (wide && motion && gsapOk) d.classList.add('is-pinned');
+  if (motion) d.classList.add('is-booting');
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap">
+
+<style>
+/* ============================================================
+   1. TOKENS
+   ============================================================ */
+:root{
+  --bg:      #0a0a0c;
+  --bg-soft: #101014;
+
+  /* genuinely see-through glass — the footage reads straight through it */
+  --glass:        rgba(255,255,255,.055);
+  --hairline:     rgba(255,255,255,.16);
+
+  --text:       #ffffff;   /* 19.4:1 on --bg */
+  --text-soft:  #c3c3cc;   /* 10.4:1 */
+  --text-muted: #a2a2ae;   /*  7.9:1 */
+  --text-dim:   #8e8e9c;   /*  6.5:1 */
+
+  --accent: #22c55e;
+  --glow:   rgba(34,197,94,.30);
+
+  /* offer-card themes */
+  --t1: #0f9d58;  --t1-soft: rgba(15,157,88,.12);
+  --t2: #3b5bdb;  --t2-soft: rgba(59,91,219,.12);
+  --t3: #7c3aed;  --t3-soft: rgba(124,58,237,.12);
+
+  /* Offer cards moved to dark glass, so the old light-paper ink palette
+     (--paper / --ink / --ink-2 / --ink-3) is gone. They use --text tokens. */
+
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  --r-sm: 10px;
+  --r-md: 18px;
+  --r-lg: 26px;
+
+  --ease: cubic-bezier(.22,.61,.36,1);
+  --dur:  260ms;
+
+  --screens: 6;
+  --shell:   600px;
+}
+
+/* ============================================================
+   2. BASE
+   ============================================================ */
+*,*::before,*::after{ box-sizing:border-box; }
+html{ background:var(--bg); }
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  font-size:clamp(1rem,.96rem + .2vw,1.0625rem);
+  line-height:1.65;
+  font-weight:300;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+h1,h2,h3,p,ul,figure{ margin:0; }
+ul{ padding:0; list-style:none; }
+a{ color:inherit; }
+svg{ display:block; }
+img{ max-width:100%; }
+
+:where(a,button):focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:3px;
+  border-radius:999px;
+}
+
+.skip-link{
+  position:absolute; left:16px; top:16px; z-index:200;
+  transform:translateY(-160%);
+  background:#fff; color:#0a0a0c;
+  font-size:.85rem; font-weight:500;
+  padding:14px 20px; border-radius:999px; text-decoration:none;
+  transition:transform var(--dur) var(--ease);
+}
+.skip-link:focus{ transform:translateY(0); }
+
+/* ============================================================
+   3. PRELOADER — display:none by default, so no-JS never sees it
+   ============================================================ */
+.preloader{
+  display:none;
+  position:fixed; inset:0; z-index:300;
+  place-items:center;
+  background:rgba(8,8,10,.92);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+}
+.is-booting .preloader{ display:grid; }
+
+.preloader__inner{
+  width:min(360px, 78vw);
+  display:grid; gap:16px; justify-items:center;
+  text-align:center;
+}
+.preloader__mark{
+  font-size:1rem; font-weight:500; letter-spacing:.02em; color:#fff;
+}
+.preloader__sub{
+  font-size:.72rem; font-weight:400; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--text-dim);
+}
+.preloader__track{
+  width:100%; height:2px; border-radius:2px;
+  background:rgba(255,255,255,.12);
+  overflow:hidden;
+}
+.preloader__fill{
+  height:100%; width:100%;
+  transform:scaleX(0); transform-origin:0 50%;
+  background:linear-gradient(90deg,rgba(34,197,94,.5),#22c55e);
+  transition:transform 120ms linear;
+}
+.preloader__pct{
+  font-size:.8rem; font-weight:400; color:var(--text-muted);
+  font-variant-numeric:tabular-nums;
+}
+.is-ready .preloader{ opacity:0; visibility:hidden; transition:opacity .5s var(--ease), visibility 0s linear .5s; }
+
+/* ============================================================
+   4. CHROME
+   ============================================================ */
+.bar{
+  position:fixed; inset:0 0 auto 0; height:2px; z-index:120;
+  background:rgba(255,255,255,.07);
+}
+.bar__fill{
+  height:100%; width:100%;
+  transform:scaleX(0); transform-origin:0 50%;
+  background:linear-gradient(90deg,rgba(255,255,255,.5),#fff);
+}
+
+.masthead{
+  position:fixed; inset:2px 0 auto 0; z-index:110;
+  display:flex; align-items:center; justify-content:space-between; gap:24px;
+  padding:20px clamp(18px,4vw,44px);
+  background:linear-gradient(180deg,rgba(10,10,12,.85),rgba(10,10,12,0));
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+}
+.masthead__mark{
+  display:flex; align-items:center; gap:10px;
+  font-size:.82rem; font-weight:500; letter-spacing:.01em;
+  text-decoration:none;
+}
+.masthead__dot{
+  width:7px; height:7px; border-radius:50%; flex:0 0 auto;
+  background:var(--accent); box-shadow:0 0 12px 1px var(--glow);
+}
+.masthead__nav{ display:flex; align-items:center; gap:clamp(14px,2.6vw,30px); }
+.masthead__nav a{
+  font-size:.86rem; font-weight:400; text-decoration:none;
+  color:var(--text-muted); padding:11px 2px;
+  transition:color var(--dur) var(--ease);
+}
+.masthead__nav a:hover{ color:#fff; }
+
+/* ============================================================
+   5. STAGE + FRAME SEQUENCE
+   ============================================================ */
+.stage{ position:relative; }
+
+.media{
+  position:sticky; top:0;
+  height:min(58vh,540px);
+  /* Native-size: cap the display box at the frame's own 1280x720 and center it.
+     The old layout stretched the 1280px-wide frames out to the full viewport
+     (e.g. 1920px on a widescreen), which is exactly what pixelated them.
+     capping here — before the image/veil/canvas are laid out — means the box
+     can never be larger than the source in either dimension, so
+     object-fit:contain never upscales. Wide/short stages letterbox on the
+     dark base instead of blurring the footage. */
+  max-width:1280px; max-height:720px;
+  margin-inline:auto;
+  overflow:hidden;
+  background:#060608;
+}
+.media__poster,
+.media__canvas{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:contain;
+  filter:brightness(.92) contrast(1.04) saturate(.96);
+}
+/* The canvas takes over once frames are decoded; the poster is the no-JS answer. */
+.media__canvas{ opacity:0; }
+.is-live .media__canvas{ opacity:1; }
+.is-live .media__poster{ opacity:0; }
+
+.media__veil{
+  position:absolute; inset:0; pointer-events:none;
+  background:
+    linear-gradient(255deg, rgba(10,10,12,.48) 0%, rgba(10,10,12,.22) 28%, rgba(10,10,12,.08) 52%, rgba(10,10,12,0) 72%),
+    radial-gradient(120% 90% at 50% 50%, rgba(10,10,12,0) 0%, rgba(10,10,12,.22) 100%);
+}
+
+/* ---- story cards ---- */
+.cards{
+  position:relative;
+  max-width:var(--shell); margin-inline:auto;
+  padding:clamp(40px,7vw,72px) clamp(18px,5vw,40px) clamp(64px,9vw,110px);
+  display:grid; gap:clamp(28px,5vw,48px);
+}
+.card{ position:relative; }
+
+.glass{
+  position:relative;
+  background:var(--glass);
+  border:1px solid var(--hairline);
+  border-radius:var(--r-lg);
+  padding:clamp(24px,3vw,40px);
+  backdrop-filter:blur(22px) saturate(1.45);
+  -webkit-backdrop-filter:blur(22px) saturate(1.45);
+  box-shadow:0 30px 70px -40px rgba(0,0,0,.85);
+  transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.glass::after{
+  content:""; position:absolute; inset:0 0 auto 0; height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);
+  border-radius:inherit;
+}
+
+.eyebrow{
+  display:flex; align-items:center; gap:10px;
+  margin-bottom:20px;
+  font-size:.72rem; font-weight:500;
+  letter-spacing:.18em; text-transform:uppercase;
+  color:var(--text-dim);
+}
+.eyebrow b{ color:var(--accent); font-weight:600; }
+.eyebrow s{ text-decoration:none; opacity:.4; }
+
+.title{
+  font-size:clamp(1.7rem,1.1rem + 2.2vw,3rem);
+  line-height:1.06; font-weight:400; letter-spacing:-.025em;
+  margin-bottom:18px; text-wrap:balance;
+}
+.lede{ color:var(--text-soft); font-size:1.08rem; max-width:44ch; margin-bottom:26px; }
+.lede strong{ color:#fff; font-weight:500; }
+
+.points{ display:grid; gap:14px; }
+.points li{ position:relative; padding-left:24px; color:var(--text-muted); max-width:46ch; }
+.points li::before{
+  content:""; position:absolute; left:0; top:.66em;
+  width:7px; height:7px; border-radius:50%;
+  background:var(--accent); box-shadow:0 0 10px 0 var(--glow);
+}
+.points li b{ color:#fff; font-weight:500; }
+
+.chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:26px; }
+.chip{
+  font-size:.8rem; font-weight:400; color:var(--text-soft);
+  padding:8px 14px; border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.05);
+}
+.chip--hot{
+  color:#fff; font-weight:500;
+  border-color:rgba(34,197,94,.4);
+  background:rgba(34,197,94,.16);
+}
+
+.facts{
+  display:flex; flex-wrap:wrap; gap:10px 24px;
+  margin-top:26px; padding-top:22px;
+  border-top:1px solid rgba(255,255,255,.12);
+  font-size:.88rem; color:var(--text-dim);
+}
+.facts span{ display:inline-flex; align-items:center; gap:8px; }
+.facts svg{ width:15px; height:15px; stroke:currentColor; fill:none; stroke-width:1.5; opacity:.7; }
+
+.cue{
+  display:inline-flex; align-items:center; gap:10px;
+  margin-top:26px;
+  font-size:.74rem; font-weight:500;
+  letter-spacing:.16em; text-transform:uppercase;
+  color:var(--text-dim);
+}
+.cue svg{ width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:1.8; }
+.is-pinned .cue{ animation:drift 2.6s ease-in-out infinite; }
+@keyframes drift{ 0%,100%{ transform:translateY(0); opacity:.75 } 50%{ transform:translateY(6px); opacity:1 } }
+
+/* ---- controls ---- */
+.controls{
+  position:absolute; inset:auto 0 0 0; z-index:5;
+  display:flex; align-items:center; gap:16px;
+  padding:18px clamp(18px,4vw,44px);
+  background:linear-gradient(180deg,rgba(10,10,12,0),rgba(10,10,12,.55));
+}
+.dots{ display:flex; align-items:center; gap:6px; }
+.dots button{
+  display:grid; place-items:center;
+  width:44px; height:44px; padding:0;
+  background:none; border:0; cursor:pointer;
+  border-radius:999px;
+}
+.dots button::before{
+  content:""; width:7px; height:7px; border-radius:50%;
+  background:rgba(255,255,255,.32);
+  transition:background var(--dur) var(--ease), transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.dots button:hover::before{ background:rgba(255,255,255,.7); transform:scale(1.25); }
+.dots button[aria-current="true"]::before{
+  background:var(--accent); transform:scale(1.35);
+  box-shadow:0 0 12px 1px var(--glow);
+}
+.dots button:focus-visible{ outline-offset:-4px; }
+
+.controls__spacer{ flex:1 1 auto; }
+
+.playpause{
+  display:grid; place-items:center;
+  width:44px; height:44px; padding:0; flex:0 0 auto;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:999px; cursor:pointer; color:var(--text-soft);
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  transition:background var(--dur) var(--ease), color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.playpause:hover{ background:rgba(255,255,255,.15); color:#fff; border-color:rgba(255,255,255,.3); }
+.playpause svg{ width:15px; height:15px; fill:currentColor; }
+.playpause .i-play{ display:none; }
+.playpause[data-state="paused"] .i-play{ display:block; }
+.playpause[data-state="paused"] .i-pause{ display:none; }
+
+/* ============================================================
+   6. OFFER CARDS — glass, transparent art, themed watermark
+   ============================================================ */
+.offers{
+  position:relative;
+  padding:clamp(72px,12vw,150px) clamp(18px,5vw,64px);
+  background:
+    radial-gradient(70% 60% at 15% 0%, rgba(34,197,94,.07), transparent 60%),
+    radial-gradient(70% 60% at 85% 20%, rgba(124,58,237,.07), transparent 60%),
+    var(--bg-soft);
+  border-top:1px solid rgba(255,255,255,.07);
+}
+.offers__head{
+  max-width:1160px; margin:0 auto clamp(38px,5vw,60px);
+}
+.offers__title{
+  font-size:clamp(1.9rem,1.1rem + 3vw,3.2rem);
+  line-height:1.05; font-weight:300; letter-spacing:-.03em;
+  margin-top:16px; text-wrap:balance;
+}
+.offers__sub{ color:var(--text-muted); max-width:52ch; margin-top:16px; }
+
+.offer-grid{
+  max-width:1160px; margin-inline:auto;
+  display:grid; gap:clamp(22px,3vw,34px);
+  grid-template-columns:1fr;
+}
+@media (min-width:860px){ .offer-grid{ grid-template-columns:repeat(3,1fr); } }
+
+/* Glass card — same material as .glass elsewhere, plus a theme tint so each
+   card still reads as its own thing. Everything is visible at rest; JS only
+   adds motion. */
+.offer{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  background:
+    linear-gradient(165deg, var(--theme-soft), transparent 58%),
+    var(--glass);
+  color:var(--text);
+  border:1px solid var(--hairline);
+  border-radius:var(--r-lg);
+  backdrop-filter:blur(26px) saturate(1.5);
+  -webkit-backdrop-filter:blur(26px) saturate(1.5);
+  box-shadow:0 30px 70px -40px rgba(0,0,0,.85), 0 1px 0 rgba(255,255,255,.10) inset;
+  padding:clamp(26px,3vw,34px);
+  display:flex; flex-direction:column; gap:16px;
+  transition:transform var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+@media (hover:hover){
+  .offer:hover{
+    transform:translateY(-4px);
+    border-color:var(--theme);
+    box-shadow:0 40px 80px -40px rgba(0,0,0,.9), 0 1px 0 rgba(255,255,255,.16) inset;
+  }
+}
+/* themed watermark — faint theme glyph bleeding off the corner */
+.offer__mark{
+  position:absolute; z-index:-1;
+  right:-46px; bottom:-56px;
+  width:230px; height:230px;
+  color:var(--theme);
+  opacity:.16;
+  pointer-events:none;
+}
+.offer__mark svg{ width:100%; height:100%; }
+
+/* thin theme rule along the top edge */
+.offer::before{
+  content:""; position:absolute; inset:0 0 auto 0; height:3px;
+  background:var(--theme);
+}
+
+.offer__art{
+  width:100%; height:118px;
+  display:block;
+  color:var(--theme);
+  margin-bottom:2px;
+}
+/* Genuinely transparent: no background, no plate, no box-shadow on the art. */
+.offer__art svg{ width:100%; height:100%; overflow:visible; }
+
+.offer__kicker{
+  font-size:.68rem; font-weight:600; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--theme);
+}
+.offer__name{
+  font-size:1.32rem; font-weight:500; letter-spacing:-.02em;
+  line-height:1.2; color:var(--text);
+}
+.offer__body{
+  font-size:.95rem; line-height:1.6; color:var(--text-soft);
+}
+.offer__list{ display:grid; gap:9px; margin-top:2px; }
+.offer__list li{
+  position:relative; padding-left:22px;
+  font-size:.9rem; color:var(--text-soft);
+}
+.offer__list li::before{
+  content:""; position:absolute; left:0; top:.62em;
+  width:6px; height:6px; border-radius:50%;
+  background:var(--theme);
+}
+.offer__list b{ color:var(--text); font-weight:600; }
+
+.offer1{ --theme:var(--t1); --theme-soft:var(--t1-soft); }
+.offer2{ --theme:var(--t2); --theme-soft:var(--t2-soft); }
+.offer3{ --theme:var(--t3); --theme-soft:var(--t3-soft); }
+
+/* ============================================================
+   7. CONTACT
+   ============================================================ */
+.contact{
+  position:relative;
+  border-top:1px solid rgba(255,255,255,.08);
+  background:var(--bg-soft);
+}
+.contact__inner{
+  max-width:1160px; margin-inline:auto;
+  padding:clamp(64px,10vw,124px) clamp(18px,5vw,64px);
+  display:grid; gap:clamp(40px,6vw,72px);
+  grid-template-columns:1fr; align-items:center;
+}
+@media (min-width:900px){ .contact__inner{ grid-template-columns:1.1fr .9fr; } }
+
+.contact__title{
+  font-size:clamp(2.1rem,1.2rem + 3.6vw,3.7rem);
+  line-height:1.02; font-weight:300; letter-spacing:-.032em;
+  margin:18px 0;
+  text-wrap:balance;
+}
+.contact__sub{ color:var(--text-muted); max-width:40ch; }
+
+.links{ display:grid; gap:14px; }
+.link{
+  display:flex; align-items:center; gap:20px;
+  min-height:76px; padding:20px 26px;
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:var(--r-md);
+  text-decoration:none; cursor:pointer;
+  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  transition:transform var(--dur) var(--ease), background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.link:hover{ transform:translateY(-2px); background:rgba(255,255,255,.09); border-color:rgba(34,197,94,.42); }
+.link__ico{
+  display:grid; place-items:center; flex:0 0 auto;
+  width:44px; height:44px; border-radius:14px;
+  background:rgba(34,197,94,.15); color:var(--accent);
+}
+.link__ico svg{ width:21px; height:21px; stroke:currentColor; fill:none; stroke-width:1.6; }
+.link__txt{ display:grid; gap:5px; min-width:0; }
+.link__txt small{
+  font-size:.7rem; font-weight:500; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--text-dim);
+}
+.link__txt span{ font-size:.95rem; overflow-wrap:anywhere; }
+.link__arrow{
+  margin-left:auto; flex:0 0 auto;
+  width:18px; height:18px; stroke:var(--text-dim); fill:none; stroke-width:1.7;
+  transition:transform var(--dur) var(--ease), stroke var(--dur) var(--ease);
+}
+.link:hover .link__arrow{ transform:translate(3px,-3px); stroke:var(--accent); }
+
+.colophon{
+  max-width:1160px; margin-inline:auto;
+  border-top:1px solid rgba(255,255,255,.08);
+  padding:26px clamp(18px,5vw,64px);
+  display:flex; flex-wrap:wrap; gap:10px 24px;
+  align-items:center; justify-content:space-between;
+  font-size:.82rem; color:var(--text-dim);
+}
+
+/* ============================================================
+   8. PINNED LAYOUT (desktop + motion allowed + GSAP)
+   ============================================================ */
+@media (min-width:901px) and (prefers-reduced-motion:no-preference){
+  .is-pinned .stage{ height:calc(var(--screens) * 100vh); }
+  .is-pinned .stage__inner{
+    position:absolute; top:0; left:0;
+    width:100%; height:100vh; overflow:hidden;
+  }
+    /* Pinned stage is a full 100vh viewport. The media sits on the LEFT,
+       side by side with the cards on the right — no more overlap over a
+       centered frame. It is fitted into the left zone (viewport minus the
+       card column + gutters), locked to 16:9, and capped at the native
+       1280x720 so it is never upscaled. */
+    .is-pinned .media{
+      position:absolute; top:50%;
+      left:clamp(24px, 5vw, 72px);
+      transform:translateY(-50%);
+      width:min(calc(100vh * 16 / 9),          /* fit inside the viewport height */
+                calc(100vw - var(--shell) - 200px)); /* leave the right strip for cards */
+      aspect-ratio:16 / 9;
+      max-width:1280px; max-height:720px;      /* and never past the native size */
+    }
+  .is-pinned .cards{
+    position:relative; height:100%;
+    max-width:none; margin:0; padding:0;
+    display:block; overflow:hidden;
+  }
+  .is-pinned .card{
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:flex-end;
+    padding:0 clamp(24px,6vw,96px);
+    pointer-events:none;
+    will-change:transform,opacity;
+  }
+  .is-pinned .card__inner{ width:100%; max-width:var(--shell); }
+}
+
+/* ============================================================
+   8b. HiDPI sharpness — never display more physical pixels than the
+       1280px-wide source frames. 1280 / dpr, kept in 16:9:
+       dpr 1.25 -> 1024 x 576
+       dpr 1.5  ->  853 x 480
+       dpr 2    ->  640 x 360
+       Later rules win, so a 2x screen takes the smallest cap. On low-dpi
+       displays none of these match and the native 1280x720 cap stands.
+   ============================================================ */
+@media (min-resolution: 1.25dppx){
+  .media{ max-width:1024px; max-height:576px; }
+}
+@media (min-resolution: 1.5dppx){
+  .media{ max-width:853px; max-height:480px; }
+}
+@media (min-resolution: 2dppx){
+  .media{ max-width:640px; max-height:360px; }
+}
+
+/* ============================================================
+   9. REDUCED MOTION — everything lands on its final state
+   ============================================================ */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+    scroll-behavior:auto !important;
+  }
+  /* No drifting cue, no push-in, no offscreen staging. */
+  .cue{ animation:none !important; }
+  .media__canvas{ display:none; }
+  .media__poster{ opacity:1 !important; }
+  .is-live .media__poster{ opacity:1 !important; }
+}
+
+/* ============================================================
+   10. NO-JS — content is already at its final, visible state;
+       only add the graceful touches. Keyed off .no-js (which only
+       the bootstrap script removes), so this does NOT depend on
+       <noscript> support.
+   ============================================================ */
+.no-js .preloader{ display:none !important; }
+.no-js .controls{ display:none; }
+</style>
+
+<noscript>
+<style>
+  /* Nothing here should ever be hidden without JS, but be explicit: if a
+     stylesheet above ever gains an opacity:0 the page must not strand it. */
+  .preloader{ display:none !important; }
+  .media__canvas{ display:none !important; }
+  .media__poster{ opacity:1 !important; }
+  .card, .offer, .glass, .offer__art, .offer__mark{
+    opacity:1 !important; transform:none !important;
+  }
+  .cue{ animation:none !important; }
+</style>
+</noscript>
 </head>
+
 <body>
+<a class="skip-link" href="#contact">Skip to contact</a>
 
-  <!-- Preloader -->
-  <div class="preloader" id="preloader">
-    <div class="preloader-text">
-      <span class="preloader-line">Wake up...</span>
-      <span class="preloader-line preloader-line-2">The Matrix has you.</span>
-      <div class="preloader-bar"><div class="preloader-bar-fill"></div></div>
-    </div>
+<!-- progress-driven preloader; hidden by default CSS, revealed by JS only -->
+<div class="preloader" id="preloader" role="progressbar"
+     aria-label="Loading the hero sequence"
+     aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+  <div class="preloader__inner">
+    <p class="preloader__mark">Ayush Shrestha</p>
+    <p class="preloader__sub">Preparing the sequence</p>
+    <div class="preloader__track"><div class="preloader__fill" id="preFill"></div></div>
+    <p class="preloader__pct" id="prePct" aria-live="polite">0%</p>
   </div>
+</div>
 
-  <!-- Matrix Rain Canvas -->
-  <canvas id="matrix-canvas" class="matrix-canvas"></canvas>
+<div class="bar" aria-hidden="true"><div class="bar__fill" id="pageBar"></div></div>
 
-  <!-- Scanline / CRT overlay -->
-  <div class="crt-overlay"></div>
-
-  <!-- HUD corners -->
-  <div class="hud-corner hud-tl"></div>
-  <div class="hud-corner hud-tr"></div>
-  <div class="hud-corner hud-bl"></div>
-  <div class="hud-corner hud-br"></div>
-
-  <!-- HUD status bar -->
-  <div class="hud-status">
-    <span class="hud-status-item" id="hud-time">--:--:--</span>
-    <span class="hud-status-item hud-status-pulse">SYSTEM ONLINE</span>
-    <span class="hud-status-item">NEO://CHICAGO</span>
-  </div>
-
-  <!-- Navigation -->
-  <nav class="nav" id="nav">
-    <a href="#hero" class="nav-logo">A<span class="nav-logo-accent">S</span></a>
-    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
-      <span></span><span></span><span></span>
-    </button>
-    <ul class="nav-links" id="nav-links">
-      <li><a href="#hero" class="nav-link active">Home</a></li>
-      <li><a href="#about" class="nav-link">About</a></li>
-      <li><a href="#skills" class="nav-link">Skills</a></li>
-      <li><a href="#choice" class="nav-link">The Choice</a></li>
-      <li><a href="#contact" class="nav-link">Contact</a></li>
-    </ul>
+<header class="masthead">
+  <a class="masthead__mark" href="#top"><span class="masthead__dot" aria-hidden="true"></span>Ayush Shrestha</a>
+  <nav class="masthead__nav" aria-label="Primary">
+    <a href="#offers">What I do</a>
+    <a href="#contact">Contact</a>
+    <a href="https://github.com/iamayushshrestha" target="_blank" rel="noopener noreferrer">GitHub</a>
   </nav>
+</header>
 
-  <main>
-    <!-- ============ HERO ============ -->
-    <section id="hero" class="hero section">
-      <div class="hero-content">
-        <p class="hero-eyebrow reveal">// SYSTEM BOOT: IDENTITY LOADED</p>
-        <h1 class="hero-name glitch" data-text="AYUSH SHRESTHA">AYUSH SHRESTHA</h1>
-        <div class="hero-role">
-          <span class="hero-prompt">&gt;</span>
-          <span id="typed-text" class="typed-text"></span>
-          <span class="typed-cursor">_</span>
-        </div>
-        <p class="hero-tagline reveal reveal-delay-1">
-          Full Stack Developer based in <span class="accent">Chicago, Illinois</span>.
-          I navigate the digital matrix — untangling bugs, logic, and breakthroughs.
-        </p>
-        <div class="hero-actions reveal reveal-delay-2">
-          <a href="#choice" class="btn btn-primary">Enter the Matrix <i class='bx bx-chevron-down'></i></a>
-          <a href="pdf/Ayush_Shrestha_SoftwareDeveloper_Resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">View Resume <i class='bx bx-file'></i></a>
-        </div>
-      </div>
-      <div class="scroll-indicator reveal reveal-delay-3">
-        <span>SCROLL</span>
-        <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
-      </div>
-    </section>
+<main id="top">
 
-    <!-- ============ ABOUT ============ -->
-    <section id="about" class="section about">
-      <div class="section-header reveal">
-        <span class="section-tag">// 01</span>
-        <h2 class="section-title">ABOUT_ME</h2>
-        <div class="section-line"></div>
+  <section class="stage" id="stage" aria-label="Career overview">
+    <div class="stage__inner" id="stageInner">
+
+      <!-- ============ FRAME-SEQUENCE HERO ============ -->
+      <div class="media">
+        <!-- poster = the ASSEMBLED hero frame. Visible with JS off. -->
+        <img class="media__poster" id="poster"
+             src="PortfolioJpg/ezgif-frame-001.jpg" width="1280" height="720"
+             alt="An exploded-view technical rendering of a warehouse automation system, shown assembled.">
+        <canvas class="media__canvas" id="seq" aria-hidden="true"></canvas>
+        <div class="media__veil" aria-hidden="true"></div>
       </div>
-      <div class="about-grid">
-        <div class="about-card terminal-card reveal">
-          <div class="terminal-bar">
-            <span class="terminal-dot red"></span>
-            <span class="terminal-dot yellow"></span>
-            <span class="terminal-dot green"></span>
-            <span class="terminal-title">about_ayush.sh</span>
+
+      <!-- ============ NARRATIVE CARDS ============ -->
+      <div class="cards" id="cards">
+
+        <article class="card" data-chapter="0">
+          <div class="card__inner">
+            <div class="glass">
+              <p class="eyebrow"><b>01</b> <s>/</s> Intro</p>
+              <h1 class="title">Ayush Shrestha</h1>
+              <p class="lede">
+                Software Developer <span aria-hidden="true">|</span>
+                <strong>Warehouse Automation &amp; Enterprise Systems</strong>
+              </p>
+              <ul class="facts">
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.4 7-11a7 7 0 1 0-14 0c0 5.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg> Skokie, IL</li>
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 15h4"/></svg> C# / .NET / SQL</li>
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg> Fleet robotics</li>
+              </ul>
+              <p class="cue">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v15M6 13l6 6 6-6"/></svg>
+                Scroll to disassemble
+              </p>
+            </div>
           </div>
-          <div class="terminal-body">
-            <p><span class="term-cmd">$ whoami</span></p>
-            <p class="term-out">Software Developer — E80 Group · Chicago, IL</p>
-            <p><span class="term-cmd">$ cat philosophy.txt</span></p>
-            <p class="term-out">
-              I build and support warehouse automation software where LGVs, palletizers, and
-              conveyors run 24/7. I work across the full stack — C#/.NET application features,
-              SQL Server performance, ERP integrations, and production troubleshooting. The
-              blue pill is easy: patch it, hide it, ship it. The red pill is deeper: understand
-              it, untangle it, and create software that truly works.
-            </p>
-            <p><span class="term-cmd">$ ./status --current</span></p>
-            <p class="term-out term-status"><span class="status-dot"></span> Open to new opportunities</p>
-          </div>
-        </div>
-        <div class="about-stats reveal reveal-delay-1">
-          <div class="stat-card">
-            <span class="stat-number" data-count="5">0</span><span class="stat-plus">+</span>
-            <span class="stat-label">Years Coding</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-number" data-count="20">0</span><span class="stat-plus">+</span>
-            <span class="stat-label">Projects Built</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-number" data-count="100">0</span><span class="stat-plus">%</span>
-            <span class="stat-label">Matrix Awareness</span>
-          </div>
-        </div>
-      </div>
-    </section>
+        </article>
 
-    <!-- ============ SKILLS ============ -->
-    <section id="skills" class="section skills">
-      <div class="section-header reveal">
-        <span class="section-tag">// 02</span>
-        <h2 class="section-title">SKILLS_MATRIX</h2>
-        <div class="section-line"></div>
-      </div>
-      <div class="skills-grid">
-        <div class="skill-card reveal" data-delay="0">
-          <div class="skill-icon"><i class='bx bxl-c-plus-plus'></i></div>
-          <h3>C# / .NET</h3>
-          <p>WMS platform, MVC, Web API, WCF, Windows Services</p>
-          <div class="skill-bar"><div class="skill-bar-fill" data-width="95%"></div></div>
-        </div>
-        <div class="skill-card reveal" data-delay="1">
-          <div class="skill-icon"><i class='bx bxs-data'></i></div>
-          <h3>SQL Server</h3>
-          <p>Stored procs, performance tuning, Always On AG, clustering</p>
-          <div class="skill-bar"><div class="skill-bar-fill" data-width="90%"></div></div>
-        </div>
-        <div class="skill-card reveal" data-delay="2">
-          <div class="skill-icon"><i class='bx bx-transfer-alt'></i></div>
-          <h3>ERP Integrations</h3>
-          <p>SAP, JD Edwards, Manhattan, PrIME via REST/XML</p>
-          <div class="skill-bar"><div class="skill-bar-fill" data-width="88%"></div></div>
-        </div>
-        <div class="skill-card reveal" data-delay="3">
-          <div class="skill-icon"><i class='bx bxs-chip'></i></div>
-          <h3>Industrial Automation</h3>
-          <p>OPC UA/Server, PLC integration, LGV fleet management</p>
-          <div class="skill-bar"><div class="skill-bar-fill" data-width="85%"></div></div>
-        </div>
-        <div class="skill-card reveal" data-delay="4">
-          <div class="skill-icon"><i class='bx bxl-react'></i></div>
-          <h3>Frontend</h3>
-          <p>React, JavaScript, HTML/CSS, Bootstrap</p>
-          <div class="skill-bar"><div class="skill-bar-fill" data-width="82%"></div></div>
-        </div>
-        <div class="skill-card reveal" data-delay="5">
-          <div class="skill-icon"><i class='bx bxl-aws'></i></div>
-          <h3>Cloud & DevOps</h3>
-          <p>Azure, AWS, Docker, Jenkins, Azure DevOps</p>
-          <div class="skill-bar"><div class="skill-bar-fill" data-width="80%"></div></div>
-        </div>
-      </div>
-    </section>
+        <article class="card" data-chapter="1">
+          <div class="card__inner">
+            <div class="glass">
+              <p class="eyebrow"><b>02</b> <s>/</s> WMS &amp; Database Performance</p>
+              <h2 class="title">24/7 Warehouse Management</h2>
+              <ul class="points">
+                <li>5+ years engineering <b>C#/.NET WMS</b> applications for live industrial environments coordinating LGVs.</li>
+                <li>Diagnosed and rewrote legacy SQL maintenance jobs — reducing execution time from <b>15 minutes to 3 minutes</b> (80% performance gain).</li>
+              </ul>
+              <div class="chips">
+                <span class="chip chip--hot">15 min → 3 min</span>
+                <span class="chip chip--hot">80% faster</span>
+                <span class="chip">C#</span><span class="chip">.NET</span><span class="chip">SQL</span>
+              </div>
+            </div>
+          </div>
+        </article>
 
-    <!-- ============ THE CHOICE ============ -->
-    <section id="choice" class="section choice">
-      <div class="section-header reveal">
-        <span class="section-tag">// 03</span>
-        <h2 class="section-title">THE_CHOICE</h2>
-        <div class="section-line"></div>
-      </div>
-      <p class="choice-intro reveal">
-        This is your last chance. After this, there is no turning back.<br>
-        <span class="accent">You take the blue pill</span> — the story ends, you wake up in your bed and believe whatever you want to believe.
-        <span class="accent">You take the red pill</span> — you stay in Wonderland, and I show you how deep the rabbit hole goes.
-      </p>
-      <div class="pills reveal reveal-delay-1">
-        <a href="pdf/Ayush_Shrestha_SoftwareDeveloper_Resume.pdf" target="_blank" rel="noopener noreferrer" class="pill pill-red">
-          <span class="pill-glow"></span>
-          <span class="pill-capsule"></span>
-          <span class="pill-title">RED PILL</span>
-          <span class="pill-sub">See my resume — the truth about my code</span>
-        </a>
-        <a href="ClickBlue.html" class="pill pill-blue">
-          <span class="pill-glow"></span>
-          <span class="pill-capsule"></span>
-          <span class="pill-title">BLUE PILL</span>
-          <span class="pill-sub">Stay comfortable — the streamlined summary</span>
-        </a>
-      </div>
-    </section>
+        <article class="card" data-chapter="2">
+          <div class="card__inner">
+            <div class="glass">
+              <p class="eyebrow"><b>03</b> <s>/</s> ERP &amp; Fleet Transitions</p>
+              <h2 class="title">Enterprise ERP Infrastructure</h2>
+              <ul class="points">
+                <li>Integrated WMS with <b>SAP</b>, <b>JD Edwards</b>, and <b>Manhattan</b> via REST/XML payloads and Web APIs.</li>
+                <li>Led WMS logic updates for fleet-wide LGV transition from <b>lead-acid to lithium-ion</b> (inductive charging).</li>
+              </ul>
+              <div class="chips">
+                <span class="chip">SAP</span><span class="chip">JD Edwards</span>
+                <span class="chip">Manhattan</span><span class="chip">REST / XML</span>
+                <span class="chip">Inductive charging</span>
+              </div>
+            </div>
+          </div>
+        </article>
 
-    <!-- ============ CONTACT ============ -->
-    <section id="contact" class="section contact">
-      <div class="section-header reveal">
-        <span class="section-tag">// 04</span>
-        <h2 class="section-title">ESTABLISH_LINK</h2>
-        <div class="section-line"></div>
-      </div>
-      <p class="contact-intro reveal">The Matrix has you. But you can reach out — I'm listening.</p>
-      <div class="contact-grid reveal reveal-delay-1">
-        <a href="https://www.linkedin.com/in/ayush-shrestha-a52a38163/" target="_blank" rel="noopener noreferrer" class="contact-card">
-          <i class='bx bxl-linkedin'></i>
-          <span>LinkedIn</span>
-        </a>
-        <a href="https://github.com/IamAyushShrestha" target="_blank" rel="noopener noreferrer" class="contact-card">
-          <i class='bx bxl-github'></i>
-          <span>GitHub</span>
-        </a>
-        <a href="https://www.instagram.com/aaeynimal" target="_blank" rel="noopener noreferrer" class="contact-card">
-          <i class='bx bxl-instagram'></i>
-          <span>Instagram</span>
-        </a>
-        <a href="mailto:iamayushshrestha@gmail.com" class="contact-card">
-          <i class='bx bxl-gmail'></i>
-          <span>Email</span>
-        </a>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="footer-inner">
-      <p class="footer-name">AYUSH SHRESTHA</p>
-      <p class="footer-copy">© <span id="year">2025</span> Ayush Shrestha. All rights reserved.</p>
-      <p class="footer-links">
-        <a href="mailto:iamayushshrestha@gmail.com">Contact</a>
-        <span class="footer-sep">|</span>
-        <a href="pdf/Ayush_Shrestha_SoftwareDeveloper_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
-      </p>
-      <p class="footer-matrix">"There is no spoon." — The Matrix</p>
+        <article class="card" data-chapter="3">
+		<div class="card__inner">
+  			<div class="glass">
+    				<p class="eyebrow"><b>04</b> <s>/</s> <strong>Personal Focus</strong></p>
+    				<h2 class="title">Applied AI Engineering</h2>
+  				<ul class="points">
+    				  <li>Learning AI hands-on and exploring what it can do <b>across every domain</b>, from language and vision to data and automation.</li>
+      <li>Building <b>practical prototypes</b> that turn rule-based software into adaptive, intelligent workflows.</li>
+    </ul>
+    <div class="chips">
+      <span class="chip">Applied AI</span><span class="chip">LLMs &amp; agents</span>
+      <span class="chip">Predictive pipelines</span><span class="chip">Rapid prototyping</span>
     </div>
-  </footer>
+  </div>
+</div>
+        </article>
 
-  <script src="script.js"></script>
+      </div>
+
+      <!-- ============ MINIMAL CONTROLS ============ -->
+      <div class="controls">
+        <div class="dots" id="dots" role="group" aria-label="Story chapters">
+          <button type="button" data-chapter="0" aria-label="Chapter 1, introduction" aria-current="true"></button>
+          <button type="button" data-chapter="1" aria-label="Chapter 2, warehouse management"></button>
+          <button type="button" data-chapter="2" aria-label="Chapter 3, enterprise systems"></button>
+          <button type="button" data-chapter="3" aria-label="Chapter 4, applied AI"></button>
+        </div>
+        <div class="controls__spacer"></div>
+        <button class="playpause" type="button" id="playPause"
+                data-state="playing" aria-pressed="false" aria-label="Freeze the footage">
+          <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+          <svg class="i-play"  viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"/></svg>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ OFFER CARDS ============ -->
+  <section class="offers" id="offers" aria-label="What I do">
+    <div class="offers__head">
+      <p class="eyebrow"><b>05</b> <s>/</s> What I do</p>
+      <h2 class="offers__title">Three things I build well.</h2>
+      <p class="offers__sub">
+        Each one runs on the same foundation: deterministic systems that stay up
+        at 3am, integrated cleanly with what you already have.
+      </p>
+    </div>
+
+    <div class="offer-grid">
+
+      <article class="offer offer1">
+        <span class="offer__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1">
+            <path d="M3 21V8l9-5 9 5v13"/><path d="M3 12h18M9 12v9M15 12v9"/>
+          </svg>
+        </span>
+        <div class="offer__art" aria-hidden="true">
+          <svg viewBox="0 0 200 118" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <!-- racking uprights -->
+            <path d="M28 14v84M72 14v84M28 44h44M28 72h44"/>
+            <!-- pallets + cartons -->
+            <rect x="34" y="24" width="14" height="20" fill="currentColor" fill-opacity=".16"/>
+            <rect x="52" y="30" width="14" height="14" fill="currentColor" fill-opacity=".1"/>
+            <rect x="34" y="52" width="14" height="20" fill="currentColor" fill-opacity=".1"/>
+            <rect x="52" y="58" width="14" height="14" fill="currentColor" fill-opacity=".16"/>
+            <!-- second bay -->
+            <path d="M100 22v76M132 22v76M100 50h32M100 76h32"/>
+            <rect x="106" y="30" width="12" height="20" fill="currentColor" fill-opacity=".13"/>
+            <rect x="120" y="36" width="10" height="14" fill="currentColor" fill-opacity=".1"/>
+            <!-- LGV robot -->
+            <path d="M142 78h44l6 8v10a4 4 0 0 1-4 4h-48a4 4 0 0 1-4-4V86a8 8 0 0 1 6-8Z" fill="currentColor" fill-opacity=".14"/>
+            <circle cx="152" cy="104" r="5"/><circle cx="178" cy="104" r="5"/>
+            <path d="M150 88h20" stroke-opacity=".55"/>
+            <!-- charge pad -->
+            <path d="M140 112h48" stroke-dasharray="4 5" stroke-opacity=".6"/>
+            <path d="M164 66v-8m0 0-4 5m4-5 4 5"/>
+            <path d="M96 104h34" stroke-opacity=".45"/>
+          </svg>
+        </div>
+        <p class="offer__kicker">Warehouse automation</p>
+        <h3 class="offer__name">WMS &amp; Fleet Systems</h3>
+        <p class="offer__body">
+          Live warehouse management software that coordinates people, stock and
+          autonomous fleets without stopping the floor.
+        </p>
+        <ul class="offer__list">
+          <li><b>C# / .NET</b> WMS applications built for 24/7 uptime</li>
+          <li>LGV fleet coordination and inductive charging logic</li>
+          <li>SQL performance work on legacy maintenance jobs</li>
+        </ul>
+      </article>
+
+      <article class="offer offer2">
+        <span class="offer__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1">
+            <circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M19 5l-3 3M8 16l-3 3"/>
+          </svg>
+        </span>
+        <div class="offer__art" aria-hidden="true">
+          <svg viewBox="0 0 200 118" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <!-- hub -->
+            <rect x="80" y="42" width="40" height="34" rx="7" fill="currentColor" fill-opacity=".16"/>
+            <path d="M92 56h16M92 63h10" stroke-opacity=".7"/>
+            <!-- spokes -->
+            <path d="M80 50 46 32M80 66 46 84M120 50l34-18M120 66l34 18" stroke-opacity=".75"/>
+            <!-- ERP boxes -->
+            <rect x="16" y="20" width="30" height="24" rx="5" fill="currentColor" fill-opacity=".1"/>
+            <path d="M22 28h18M22 34h10" stroke-opacity=".6"/>
+            <rect x="16" y="72" width="30" height="24" rx="5" fill="currentColor" fill-opacity=".1"/>
+            <path d="M22 80h18M22 86h10" stroke-opacity=".6"/>
+            <rect x="154" y="20" width="30" height="24" rx="5" fill="currentColor" fill-opacity=".1"/>
+            <path d="M160 28h18M160 34h10" stroke-opacity=".6"/>
+            <rect x="154" y="72" width="30" height="24" rx="5" fill="currentColor" fill-opacity=".1"/>
+            <path d="M160 80h18M160 86h10" stroke-opacity=".6"/>
+            <!-- payload tokens travelling the wires -->
+            <circle cx="63" cy="41" r="3.5" fill="currentColor"/>
+            <circle cx="63" cy="77" r="3.5" fill="currentColor" fill-opacity=".6"/>
+            <circle cx="137" cy="41" r="3.5" fill="currentColor" fill-opacity=".6"/>
+            <circle cx="137" cy="77" r="3.5" fill="currentColor"/>
+            <path d="M100 12v18M100 88v18" stroke-opacity=".4" stroke-dasharray="3 4"/>
+          </svg>
+        </div>
+        <p class="offer__kicker">Enterprise integration</p>
+        <h3 class="offer__name">ERP &amp; API Connectivity</h3>
+        <p class="offer__body">
+          Getting a warehouse system to speak to the ERP you already run —
+          cleanly, verifiably, and without a rewrite.
+        </p>
+        <ul class="offer__list">
+          <li><b>SAP</b>, JD Edwards and Manhattan integration</li>
+          <li>REST / XML payload contracts and Web APIs</li>
+          <li>Schema mapping, retries and reconciliation</li>
+        </ul>
+      </article>
+
+      <article class="offer offer3">
+        <span class="offer__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1">
+            <path d="M12 3v6M12 15v6M3 12h6M15 12h6M6.5 6.5l4 4M13.5 13.5l4 4M17.5 6.5l-4 4M10.5 13.5l-4 4"/>
+            <circle cx="12" cy="12" r="2.6"/>
+          </svg>
+        </span>
+        <div class="offer__art" aria-hidden="true">
+          <svg viewBox="0 0 200 118" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <!-- network: layers -->
+            <circle cx="34" cy="30" r="5" fill="currentColor"/>
+            <circle cx="34" cy="30" r="10" stroke-opacity=".3"/>
+            <circle cx="100" cy="18" r="5" fill="currentColor" fill-opacity=".7"/>
+            <circle cx="166" cy="30" r="5" fill="currentColor"/>
+            <circle cx="34" cy="30" r="10" stroke-opacity=".3" fill="none"/>
+            <path d="M34 40 100 30M100 30l66 10" stroke-opacity=".5"/>
+            <!-- hidden layer -->
+            <circle cx="66" cy="62" r="5" fill="currentColor" fill-opacity=".45"/>
+            <circle cx="134" cy="62" r="5" fill="currentColor" fill-opacity=".45"/>
+            <path d="M34 30 66 62M166 30l-32 32" stroke-opacity=".35" stroke-dasharray="4 5"/>
+            <!-- output -->
+            <circle cx="100" cy="92" r="7" fill="currentColor" fill-opacity=".16"/>
+            <circle cx="100" cy="92" r="3.5" fill="currentColor"/>
+            <path d="M66 62l34 30M134 62l-34 30" stroke-opacity=".6"/>
+            <!-- predictive path -->
+            <path d="M18 108c26 0 34-10 52-10s28 10 52 10 30-10 60-10" stroke-opacity=".8"/>
+            <circle cx="70" cy="98" r="3" fill="currentColor"/>
+            <circle cx="122" cy="108" r="3" fill="currentColor"/>
+          </svg>
+        </div>
+            <p class="offer__kicker">Applied AI</p>
+            <h3 class="offer__name">Learning &amp; Exploring</h3>
+            <p class="offer__body">
+              Learning how AI works by building small things with it and seeing
+              where it helps across different kinds of problems.
+            </p>
+            <ul class="offer__list">
+              <li>Experimenting with <b>LLMs and agents</b></li>
+              <li>Small prototypes to test what's possible</li>
+              <li>Exploring ideas across different domains</li>
+            </ul>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="contact__inner">
+      <div>
+        <p class="eyebrow"><b>06</b> <s>/</s> Contact</p>
+        <h2 class="contact__title">Let's build reliable systems.</h2>
+        <p class="contact__sub">
+          Open to software engineering roles across warehouse automation,
+          enterprise integration, and applied AI.
+        </p>
+      </div>
+
+      <div class="links">
+        <a class="link" href="https://github.com/iamayushshrestha" target="_blank" rel="noopener noreferrer">
+          <span class="link__ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+          </span>
+          <span class="link__txt"><small>GitHub</small><span>iamayushshrestha</span></span>
+          <svg class="link__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
+        </a>
+
+        <a class="link" href="mailto:iamayushshrestha@gmail.com">
+          <span class="link__ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          </span>
+          <span class="link__txt"><small>Email</small><span>iamayushshrestha@gmail.com</span></span>
+          <svg class="link__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="colophon">
+      <span>Skokie, Illinois · Available for engineering roles</span>
+      <span>Scroll to disassemble · scroll back to reassemble</span>
+    </div>
+  </section>
+
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  var root    = document.documentElement;
+  var canvas  = document.getElementById('seq');
+  var stage   = document.getElementById('stage');
+  var inner   = document.getElementById('stageInner');
+  var cards   = [].slice.call(document.querySelectorAll('.card'));
+  var dots    = [].slice.call(document.querySelectorAll('#dots button'));
+  var pageBar = document.getElementById('pageBar');
+  var playBtn = document.getElementById('playPause');
+  var offers  = [].slice.call(document.querySelectorAll('.offer'));
+
+  var hasGSAP = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
+  var pinned  = root.classList.contains('is-pinned') && hasGSAP;
+  var motion = !/motion=off/.test(location.search + location.hash) &&
+              window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+  var ctx     = canvas && canvas.getContext ? canvas.getContext('2d', { alpha: false }) : null;
+
+  function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
+
+  /* ==========================================================
+     FRAME SEQUENCE
+     Ping-pong mapping: scroll down runs frames 1 -> 300 (the
+     product comes apart), scroll back up runs 300 -> 1 (it goes
+     back together). Any scroll position maps to exactly one
+     frame, so it is exactly reversible and there is no visible
+     seam where the clip runs out.
+     ========================================================== */
+  var FRAMES  = 300;
+  var BASE    = 'PortfolioJpg/ezgif-frame-';
+  var imgs    = new Array(FRAMES);
+  var loaded  = 0;
+  var ready   = false;
+  var frozen  = false;
+  var lastIdx = -1;
+  var rafId   = null;
+
+  function pad3(n) { return (n < 10 ? '00' : n < 100 ? '0' : '') + n; }
+
+  /* p in [0,1] -> frame index. p=0 assembled, p=0.5 exploded, p=1 assembled. */
+  function frameAt(p) {
+    var n = FRAMES - 1;
+    var t = clamp(p, 0, 1) * 2;
+    return Math.round(t <= 1 ? t * n : (2 - t) * n);
+  }
+
+  function setProgressUI(p) {
+    var v = Math.round(clamp(p, 0, 1) * 100);
+    var pct = v + '%';
+    var fill = document.getElementById('preFill');
+    var txt  = document.getElementById('prePct');
+    var bar  = document.getElementById('preloader');
+    if (fill) fill.style.transform = 'scaleX(' + (v / 100) + ')';
+    if (txt)  txt.textContent = pct;
+    if (bar && bar.getAttribute('aria-valuenow') !== String(v)) {
+      bar.setAttribute('aria-valuenow', String(v));
+    }
+  }
+
+  /* ---- preload ----
+     The closure factory matters: `var` inside a for-loop is function-scoped,
+     so every image would otherwise share one `counted` flag and only the
+     first load would register. */
+  function loadFrames() {
+    for (var i = 0; i < FRAMES; i++) {
+      (function (index) {
+        var img = new Image();
+        img.decoding = 'async';
+        var counted = false;
+
+        function done() {
+          if (counted) return;
+          counted = true;
+          loaded++;
+          setProgressUI(loaded / FRAMES);
+          if (loaded >= FRAMES) finish();
+        }
+
+        img.onload  = done;
+        img.onerror = done;      /* a missing frame must not stall the bar */
+        img.src = BASE + pad3(index + 1) + '.jpg';
+        imgs[index] = img;
+        /* Warm the decode so the first scroll does not stutter. */
+        if (img.decode) img.decode().then(done, done);
+      })(i);
+    }
+  }
+
+  function finish() {
+    if (ready) return;
+    ready = true;
+
+    setProgressUI(1);
+    resizeCanvas();
+    /* Settle on the ASSEMBLED hero frame (index 0) before revealing. */
+    draw(0);
+    lastIdx = 0;
+
+    clearTimeout(window.__revealFailsafe);
+    root.classList.add('is-ready', 'is-live');
+    if (pinned) ScrollTrigger.refresh();
+    startLoop();
+  }
+
+  /* ---- canvas ---- */
+  function resizeCanvas() {
+    if (!canvas || !ctx) return;
+    var box = canvas.getBoundingClientRect();
+    if (!box.width || !box.height) return;
+    var dpr  = Math.min(window.devicePixelRatio || 1, 2);
+    var w = Math.round(box.width  * dpr);
+    var h = Math.round(box.height * dpr);
+    /* The CSS already caps this element's DISPLAY size at the source 1280x720
+       and centers it, so box*dpr is never larger than the frame's native
+       pixels — the buffer is a 1:1 or downsample of the source. That is what
+       kills the pixelation: we never draw a 1280x720 frame onto a larger box
+       and upscale it. No separate cap needed (and the old one inverted, which
+       shrank small boxes and re-blurred them). */
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width = w; canvas.height = h;
+      lastIdx = -1;              /* force a repaint at the new size */
+    }
+  }
+
+  function draw(idx) {
+    var img = imgs[idx];
+    if (!img || !ctx || !img.complete || !img.naturalWidth) return false;
+    var cw = canvas.width, ch = canvas.height;
+    if (!cw || !ch) return false;
+
+    /* cover-fit the source into the canvas */
+    var ir = img.naturalWidth / img.naturalHeight;
+    var cr = cw / ch;
+    var sw, sh, sx, sy;
+    if (ir > cr) { sh = img.naturalHeight; sw = sh * cr; sx = (img.naturalWidth - sw) / 2; sy = 0; }
+    else         { sw = img.naturalWidth;  sh = sw / cr; sx = 0; sy = (img.naturalHeight - sh) / 2; }
+
+    try { ctx.drawImage(img, sx, sy, sw, sh, 0, 0, cw, ch); }
+    catch (e) { return false; }
+    return true;
+  }
+
+  /* Progress straight from the real scroll position — no smoothing, no lag.
+     This is what keeps the footage pinned to the scrollbar at any speed. */
+  function stageProgress() {
+    var r    = stage.getBoundingClientRect();
+    var span = stage.offsetHeight - window.innerHeight;
+    if (span <= 0) {
+      /* Stacked layout: map page scroll through the stage. */
+      var s2 = r.height + window.innerHeight;
+      return s2 > 0 ? clamp((window.innerHeight - r.top) / s2, 0, 1) : 0;
+    }
+    return clamp(-r.top / span, 0, 1);
+  }
+
+  var ticks = 0, lastTickAt = 0, stalledT = null;
+
+  function nowMs() {
+    return (window.performance && performance.now) ? performance.now() : Date.now();
+  }
+
+  function render() {
+    if (!ready || !ctx) return;
+
+    var p = stageProgress();
+
+    /* page progress bar */
+    var doc = document.body.scrollHeight - window.innerHeight;
+    pageBar.style.transform = 'scaleX(' + (doc > 0 ? clamp(window.scrollY / doc, 0, 1) : 0) + ')';
+
+    /* chapter dots */
+    var idx = 0;
+    if (pinned && tlRef) {
+      for (var i = 0; i < CHAPTERS.length; i++) {
+        if (tlRef.progress * TOTAL >= CHAPTERS[i].enter) idx = i;
+      }
+    } else {
+      for (var j = 0; j < cards.length; j++) {
+        if (cards[j].getBoundingClientRect().top <= window.innerHeight * 0.6) idx = j;
+      }
+    }
+    if (idx !== activeDot) {
+      activeDot = idx;
+      for (var k = 0; k < dots.length; k++) {
+        if (k === idx) dots[k].setAttribute('aria-current', 'true');
+        else dots[k].removeAttribute('aria-current');
+      }
+    }
+
+    if (frozen) return;
+    /* frames are cheap but not free — only repaint when the index changes */
+    var f = frameAt(p);
+    if (f !== lastIdx && draw(f)) lastIdx = f;
+  }
+
+  function loop() {
+    rafId = requestAnimationFrame(loop);
+    if (document.hidden || !ctx) return;
+    ticks++;
+    lastTickAt = nowMs();
+    render();
+  }
+
+  /* requestAnimationFrame is throttled hard in a background tab. Left alone
+     that means the canvas keeps showing a stale frame while the page still
+     scrolls — the footage would disagree with the scrollbar. If the rAF loop
+     has not ticked recently, drive the update from a timer instead. */
+  function nudge() {
+    if (!ready || document.hidden) return;
+    if (nowMs() - lastTickAt < 150) return;      /* loop is healthy, let it own it */
+    clearTimeout(stalledT);
+    stalledT = setTimeout(function () { lastTickAt = nowMs(); render(); }, 24);
+  }
+  window.addEventListener('scroll', nudge, { passive: true });
+
+  function startLoop() {
+    if (!rafId && motion && ctx) rafId = requestAnimationFrame(loop);
+  }
+
+  /* ---------- freeze control (WCAG 2.2.2 — moving content) ---------- */
+  playBtn.addEventListener('click', function () {
+    frozen = !frozen;
+    playBtn.setAttribute('data-state', frozen ? 'paused' : 'playing');
+    playBtn.setAttribute('aria-pressed', String(frozen));
+    playBtn.setAttribute('aria-label', frozen ? 'Resume the footage' : 'Freeze the footage');
+  });
+
+  /* ==========================================================
+     STORY TIMELINE (pinned desktop only)
+     ========================================================== */
+  var TOTAL    = 10.55;
+  var CHAPTERS = [
+    { enter: 0.00, exit: 2.35 },
+    { enter: 2.40, exit: 4.70 },
+    { enter: 4.75, exit: 7.05 },
+    { enter: 7.10, exit: TOTAL }
+  ];
+  var activeDot = -1;
+  var tlRef = null;
+
+  if (pinned) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    var hero  = cards[0];
+    var later = cards.slice(1);
+
+    gsap.set(later, { xPercent: 100, opacity: 0 });
+    gsap.set(hero,  { xPercent: 0,   opacity: 1 });
+
+    var tl = gsap.timeline({
+      defaults: { ease: 'none' },
+      scrollTrigger: {
+        id: 'story',
+        trigger: stage,
+        start: 'top top',
+        end: function () { return '+=' + Math.max(1, stage.offsetHeight - window.innerHeight); },
+        pin: inner,
+        pinSpacing: false,
+        /* Light smoothing only; the frame sequence reads raw scroll so the
+           footage itself never lags behind the scrollbar. */
+        scrub: 0.3,
+        anticipatePin: 1,
+        invalidateOnRefresh: true
+      }
+    });
+    tlRef = tl;
+
+    function bitsOf(card) {
+      return card.querySelectorAll('.eyebrow, .title, .points li, .chip, .facts span, .cue');
+    }
+
+    function enterCard(i) {
+      var at   = CHAPTERS[i].enter + 0.05;
+      var bits = bitsOf(cards[i]);
+      gsap.set(bits, { y: 14, opacity: 0 });
+      tl.fromTo(cards[i],
+        { xPercent: 100, opacity: 0 },
+        { xPercent: 0, opacity: 1, duration: 1.05, ease: 'power3.out' }, at);
+      tl.fromTo(bits,
+        { y: 14, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.55, ease: 'power3.out', stagger: 0.05 }, at + 0.14);
+    }
+
+    function exitCard(i) {
+      tl.to(cards[i],
+        { opacity: 0, xPercent: -5, scale: 0.98, duration: 0.8, ease: 'power2.inOut' },
+        CHAPTERS[i + 1].enter);
+    }
+
+    tl.to(hero, { opacity: 0, xPercent: -5, scale: 0.98, duration: 0.65, ease: 'power1.in' },
+         CHAPTERS[1].enter);
+    [1, 2, 3].forEach(enterCard);
+    [1, 2].forEach(exitCard);
+    tl.to({}, { duration: TOTAL - (CHAPTERS[3].enter + 0.9) }, CHAPTERS[3].enter + 0.9);
+
+    /* slow push-in across the whole journey */
+    if (canvas) tl.fromTo(canvas, { scale: 1.06 }, { scale: 1.0, duration: TOTAL, ease: 'none' }, 0);
+  }
+
+  /* ==========================================================
+     OFFER CARDS
+     Each entrance is bound to its OWN element position (not a
+     hardcoded offset), so it fires exactly where the card is
+     actually visible. Alternate sides so none can be missed.
+     ========================================================== */
+  if (hasGSAP && motion) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    offers.forEach(function (card, i) {
+      var fromRight = (i % 2 === 1);
+      gsap.set(card, {
+        xPercent: fromRight ? 118 : -118,
+        opacity: 0
+      });
+
+      gsap.timeline({
+        /* start when the card is 86% up the viewport, finish when it is
+           comfortably inside — never before it is seen, never after it has
+           passed. Both values are viewport-relative, so they hold at any size. */
+        scrollTrigger: {
+          id: 'offer-' + (i + 1),
+          trigger: card,
+          start: 'top 86%',
+          end: 'top 34%',
+          scrub: 0.4
+        }
+      })
+      .to(card, { xPercent: 0, opacity: 1, ease: 'power3.out' })
+      .from(card.querySelectorAll('.offer__art, .offer__kicker, .offer__name, .offer__body, .offer__list li'),
+            { y: 16, opacity: 0, duration: 0.4, stagger: 0.05, ease: 'power2.out' }, 0);
+    });
+  } else if (hasGSAP) {
+    /* reduced motion: final state, nothing staged offscreen */
+    gsap.set(offers, { clearProps: 'all' });
+  }
+
+  /* ==========================================================
+     CHAPTER DOTS
+     ========================================================== */
+  dots.forEach(function (btn, i) {
+    btn.addEventListener('click', function () {
+      if (pinned && tlRef) {
+        var st   = tlRef.scrollTrigger;
+        var span = st.end - st.start;
+        window.scrollTo({
+          top: st.start + ((CHAPTERS[i].enter + 0.55) / TOTAL) * span,
+          behavior: motion ? 'smooth' : 'auto'
+        });
+      } else {
+        cards[i].scrollIntoView({ behavior: motion ? 'smooth' : 'auto', block: 'center' });
+      }
+    });
+  });
+
+  /* ==========================================================
+     BOOT
+     ========================================================== */
+  if (hasGSAP) {
+    gsap.to(pageBar, {
+      scaleX: 1, ease: 'none',
+      scrollTrigger: { id: 'pagebar', trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: 0.3 }
+    });
+  }
+
+  var resizeT;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeT);
+    resizeT = setTimeout(function () {
+      resizeCanvas();
+      if (hasGSAP) ScrollTrigger.refresh();
+    }, 180);
+  });
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) {
+      if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+    } else {
+      /* The tab may have been throttled; force a catch-up repaint. */
+      lastTickAt = nowMs();
+      render();
+      startLoop();
+    }
+  });
+
+  /* Reduced motion: no sequence loop at all, poster stays visible. */
+  if (!motion) {
+    clearTimeout(window.__revealFailsafe);
+    root.classList.add('is-ready');
+    root.classList.remove('is-booting');
+  } else {
+    loadFrames();
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () {
+        if (hasGSAP) ScrollTrigger.refresh();
+      });
+    }
+    window.addEventListener('load', function () {
+      if (hasGSAP) ScrollTrigger.refresh();
+    });
+  }
+
+  /* ==========================================================
+     DIAGNOSTICS
+     ?audit=1 — read each ScrollTrigger's RESOLVED start/end and
+       compare it to where the element actually sits in the
+       document, measured with getBoundingClientRect.
+     ?probe=1 — scroll the page and confirm the drawn frame index
+       matches the frame the scroll position demands.
+     Results go to document.title because that is readable without
+     devtools.
+     ========================================================== */
+  var marker = location.search + location.hash;
+  /* Measure the offer-card contract rather than trusting the CSS:
+   light paper, genuinely transparent art, themed watermark. */
+  function styleReport() {
+    return [].map.call(document.querySelectorAll('.offer'), function (card, i) {
+      var cs  = getComputedStyle(card);
+      var art = card.querySelector('.offer__art');
+      var as  = art ? getComputedStyle(art) : null;
+      var mk  = card.querySelector('.offer__mark');
+      var ms  = mk ? getComputedStyle(mk) : null;
+      /* Report the glass contract itself rather than a light/dark guess:
+         the blur radius and the presence of a translucent layer are what
+         make this read as the same material as the rest of the page. */
+      var bf = cs.backdropFilter || cs.webkitBackdropFilter || '';
+      var bm = /blur\((\d+(?:\.\d+)?)px\)/.exec(bf);
+      var sat = /saturate\(([\d.]+)\)/.exec(bf);
+      return (i + 1) + ':bg' + cs.backgroundColor.replace(/\s/g, '') +
+             ':blur' + (bm ? bm[1] : 'NONE') +
+             ':sat' + (sat ? sat[1] : 'NONE') +
+             ':bd' + cs.borderTopColor.replace(/\s/g, '') +
+             ':art' + (as && (as.backgroundColor === 'rgba(0, 0, 0, 0)' ||
+                              as.backgroundColor === 'transparent') ? 'clear' : as.backgroundColor) +
+             ':wm' + (ms ? ms.color.replace(/\s/g, '') + '@' + ms.opacity : 'none') +
+             ':o' + cs.opacity +
+             ':tx' + (cs.transform === 'none' ? 'none' : cs.transform.split(',')[4].trim());
+    }).join(' ');
+  }
+
+  var isAudit = /audit=1/.test(marker);
+  var isProbe = /probe=1/.test(marker);
+
+  if ((isAudit || isProbe) && hasGSAP) {
+    setTimeout(function () {
+      ScrollTrigger.refresh();
+      setTimeout(function () {
+        var vh   = window.innerHeight;
+        var sy   = window.scrollY;
+        var rows = ScrollTrigger.getAll().map(function (st) {
+          var el = st.trigger;
+          if (!el || !el.getBoundingClientRect) return null;
+          var r    = el.getBoundingClientRect();
+          var dTop = r.top + sy;
+          var visTop = dTop - vh;      /* scrollY where it first appears   */
+          var visBot = r.bottom + sy;   /* scrollY where it has fully passed */
+          return {
+            id: st.vars.id || el.className || el.tagName,
+            start: Math.round(st.start),
+            end: Math.round(st.end),
+            visTop: Math.round(visTop),
+            visBot: Math.round(visBot),
+            lateStart: Math.round(st.start - visTop),
+            earlyEnd: Math.round(st.end - visBot)
+          };
+        }).filter(Boolean);
+
+        /* An element-scoped animation must not begin before it is on screen
+           and must finish before it has scrolled away. */
+        var bad = rows.filter(function (r) {
+          return r.id.indexOf('offer') === 0 && (r.lateStart < -8 || r.earlyEnd > 8);
+        });
+
+        var base = 'AUDIT vh=' + vh + ' n=' + rows.length + ' bad=' + bad.length +
+          ' ready=' + ready + ' live=' + root.classList.contains('is-live') +
+          ' log=' + (window.__log.length ? window.__log.join(',') : 'clean') +
+          ' || ' + rows.map(function (r) {
+            return r.id + '[' + r.start + '-' + r.end + ' vis ' + r.visTop + '-' + r.visBot +
+                   ' ls=' + r.lateStart + ' ee=' + r.earlyEnd + ']';
+          }).join(' | ');
+
+        if (!isProbe) { document.title = base + ' STYLE ' + styleReport(); return; }
+
+        /* ---- frame-sync sweep (compact title: the row dump is long) ---- */
+        var span  = stage.offsetHeight - window.innerHeight;
+        var steps = [0, .125, .25, .375, .5, .625, .75, .875, 1];
+        var head  = 'PROBE ready=' + ready + ' ticks=' + ticks + ' log=' +
+                    (window.__log.length ? window.__log.join(',') : 'clean') + ' ';
+        var out = [];
+        var i = 0;
+        (function next() {
+          if (i >= steps.length) {
+            window.scrollTo(0, 0);
+            setTimeout(function () {
+              /* Report against the ACTUAL scroll position, not the ideal
+                 one — round-tripping through integer pixels shifts the index
+                 by at most one frame, which is not a defect. */
+              document.title = head + 'SYNC ' + out.join(' ') +
+                               ' ticks=' + ticks + ' back=' + lastIdx;
+            }, 600);
+            return;
+          }
+          var p = steps[i++];
+          var y = Math.round(span * p);
+          window.scrollTo(0, y);
+          setTimeout(function () {
+            var actual = stage.offsetHeight > window.innerHeight
+              ? clamp(window.scrollY / (stage.offsetHeight - window.innerHeight), 0, 1) : p;
+            var want = frameAt(actual);
+            out.push(p + ':' + want + (lastIdx === want ? 'ok' : 'MISS' + lastIdx));
+            next();
+          }, 150);
+        })();
+      }, 400);
+    }, 900);
+  }
+
+})();
+</script>
 </body>
 </html>
