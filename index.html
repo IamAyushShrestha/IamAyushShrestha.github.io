@@ -235,15 +235,6 @@ img{ max-width:100%; }
 .media{
   position:sticky; top:0;
   height:min(58vh,540px);
-  /* Native-size: cap the display box at the frame's own 1280x720 and center it.
-     The old layout stretched the 1280px-wide frames out to the full viewport
-     (e.g. 1920px on a widescreen), which is exactly what pixelated them.
-     capping here — before the image/veil/canvas are laid out — means the box
-     can never be larger than the source in either dimension, so
-     object-fit:contain never upscales. Wide/short stages letterbox on the
-     dark base instead of blurring the footage. */
-  max-width:1280px; max-height:720px;
-  margin-inline:auto;
   overflow:hidden;
   background:#060608;
 }
@@ -251,8 +242,8 @@ img{ max-width:100%; }
 .media__canvas{
   position:absolute; inset:0;
   width:100%; height:100%;
-  object-fit:contain;
-  filter:brightness(.92) contrast(1.04) saturate(.96);
+  object-fit:cover;
+  filter:brightness(.62) contrast(1.05) saturate(.92);
 }
 /* The canvas takes over once frames are decoded; the poster is the no-JS answer. */
 .media__canvas{ opacity:0; }
@@ -262,8 +253,8 @@ img{ max-width:100%; }
 .media__veil{
   position:absolute; inset:0; pointer-events:none;
   background:
-    linear-gradient(255deg, rgba(10,10,12,.48) 0%, rgba(10,10,12,.22) 28%, rgba(10,10,12,.08) 52%, rgba(10,10,12,0) 72%),
-    radial-gradient(120% 90% at 50% 50%, rgba(10,10,12,0) 0%, rgba(10,10,12,.22) 100%);
+    linear-gradient(255deg, rgba(10,10,12,.90) 0%, rgba(10,10,12,.62) 42%, rgba(10,10,12,.48) 70%, rgba(10,10,12,.30) 100%),
+    radial-gradient(120% 90% at 50% 50%, rgba(10,10,12,.30) 0%, rgba(10,10,12,.62) 100%);
 }
 
 /* ---- story cards ---- */
@@ -388,6 +379,73 @@ img{ max-width:100%; }
   color:#fff; font-weight:500;
   border-color:rgba(34,197,94,.4);
   background:rgba(34,197,94,.16);
+}
+
+/* ---- TECH-STACK RIBBON ---------------------------------------------------
+   A glass tech ticker that sits on the first screen, as a sibling of the
+   intro .glass card. It reuses the exact same material tokens + blur + top
+   hairline so it reads as the same glass family, not a competing surface.
+   The track is a 2× duplicated, seamless infinite marquee: CSS-only,
+   GPU-composited (transform only), and safe for JS / no-JS alike.
+   (The Matrix.html marquee stays as the full-bleed skill banner; this is
+   the compact glass version of the same list, on the intro card.)
+   Full-bleed: the card column is always centred in the viewport (both the
+   pinned desktop and the stacked layouts), so width:100vw +
+   margin-left:calc(50% - 50vw) pushes the strip edge-to-edge without
+   touching the DOM. */
+.tech-ticker{
+  position:relative;
+  z-index:6;
+  width:100vw;
+  margin-left:calc(50% - 50vw);
+  margin-top:clamp(14px,2vw,22px);
+  padding:clamp(11px,1.4vw,15px) clamp(16px,2vw,22px);
+  background:var(--glass);                  /* same rgba(255,255,255,.055) as .glass */
+  border-top:1px solid var(--hairline);     /* edge-to-edge strip: top/bottom hairlines only */
+  border-bottom:1px solid var(--hairline);
+  backdrop-filter:blur(22px) saturate(1.45);/* same blur as .glass */
+  -webkit-backdrop-filter:blur(22px) saturate(1.45);
+  box-shadow:0 24px 55px -38px rgba(0,0,0,.85);
+  overflow:hidden;
+}
+/* matching top hairline highlight, exactly like .glass::after */
+.tech-ticker::after{
+  content:""; position:absolute; inset:0 0 auto 0; height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);
+  pointer-events:none;
+}
+/* left/right fade so the text fades in and out of the glass instead of
+   being hard-clipped at the rounded corners — the glass keeps feeling
+   infinite in both directions */
+.tech-ticker::before{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  /* left/right fade that blends with the stage behind the card, so the
+     ribbon text fades in and out of the glass instead of hard-clipping */
+  background:
+    linear-gradient(90deg,rgba(10,10,12,.55) 0%,rgba(10,10,12,0) 10%,rgba(10,10,12,0) 90%,rgba(10,10,12,.55) 100%);
+}
+.tech-ticker__track{
+  display:flex; align-items:center; gap:0;
+  width:max-content;             /* let it size to its content — no wrapping */
+  white-space:nowrap;
+  animation:tech-roll 34s linear infinite;
+  will-change:transform;
+}
+/* pause on hover so it can be read; resumes on leave */
+.tech-ticker:hover .tech-ticker__track{ animation-play-state:paused; }
+.tech-ticker__track > span{
+  display:inline-flex; align-items:center;
+  /* each item carries a trailing separator; the ✦ + nbsp already in the
+     markup act as the visible divider — no extra styling needed */
+  font-size:.82rem; font-weight:500;
+  letter-spacing:.16em; text-transform:uppercase;
+  color:var(--text-soft);
+  white-space:nowrap;
+  padding-right:10px;           /* breathing room between the two copies */
+}
+@keyframes tech-roll{
+  from{ transform:translate3d(0,0,0); }
+  to  { transform:translate3d(-50%,0,0); }
 }
 
 .facts{
@@ -562,6 +620,39 @@ img{ max-width:100%; }
 .offer2{ --theme:var(--t2); --theme-soft:var(--t2-soft); }
 .offer3{ --theme:var(--t3); --theme-soft:var(--t3-soft); }
 .project{ --theme:var(--t1); --theme-soft:var(--t1-soft); }
+
+/* ============================================================
+   6a-2. TECH TICKER
+   ============================================================ */
+.ticker{
+  position:relative; overflow:hidden;
+  border-block:1px solid rgba(255,255,255,.09);
+  background:linear-gradient(90deg, transparent, rgba(34,197,94,.05) 40%, rgba(34,197,94,.05) 60%, transparent);
+  padding:22px 0;
+  -webkit-mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+          mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.ticker__track{
+  display:flex; width:max-content;
+  will-change:transform;
+  animation:ticker-scroll 28s linear infinite;
+}
+.ticker:hover .ticker__track{ animation-play-state:paused; }
+.ticker__group{ display:flex; align-items:center; white-space:nowrap; }
+.ticker__group span{
+  font-size:.78rem; font-weight:600;
+  letter-spacing:.22em; text-transform:uppercase;
+  color:var(--text-soft);
+  padding:0 1.4rem;
+}
+.ticker__group em{
+  font-style:normal; color:var(--accent);
+  font-size:.7rem;
+}
+@keyframes ticker-scroll{ to{ transform:translateX(-50%); } }
+@media (prefers-reduced-motion: reduce){
+  .ticker__track{ animation:none; }
+}
 
 /* ============================================================
    6b. PROJECTS SHOWCASE
@@ -751,20 +842,9 @@ img{ max-width:100%; }
     position:absolute; top:0; left:0;
     width:100%; height:100vh; overflow:hidden;
   }
-    /* Pinned stage is a full 100vh viewport. The media sits on the LEFT,
-       side by side with the cards on the right — no more overlap over a
-       centered frame. It is fitted into the left zone (viewport minus the
-       card column + gutters), locked to 16:9, and capped at the native
-       1280x720 so it is never upscaled. */
-    .is-pinned .media{
-      position:absolute; top:50%;
-      left:clamp(24px, 5vw, 72px);
-      transform:translateY(-50%);
-      width:min(calc(100vh * 16 / 9),          /* fit inside the viewport height */
-                calc(100vw - var(--shell) - 200px)); /* leave the right strip for cards */
-      aspect-ratio:16 / 9;
-      max-width:1280px; max-height:720px;      /* and never past the native size */
-    }
+    /* Full-bleed background: the footage fills the whole pinned viewport and
+       the glass cards float over it. */
+    .is-pinned .media{ position:absolute; inset:0; height:100%; }
   .is-pinned .cards{
     position:relative; height:100%;
     max-width:none; margin:0; padding:0;
@@ -778,25 +858,16 @@ img{ max-width:100%; }
     will-change:transform,opacity;
   }
   .is-pinned .card__inner{ width:100%; max-width:var(--shell); }
-}
-
-/* ============================================================
-   8b. HiDPI sharpness — never display more physical pixels than the
-       1280px-wide source frames. 1280 / dpr, kept in 16:9:
-       dpr 1.25 -> 1024 x 576
-       dpr 1.5  ->  853 x 480
-       dpr 2    ->  640 x 360
-       Later rules win, so a 2x screen takes the smallest cap. On low-dpi
-       displays none of these match and the native 1280x720 cap stands.
-   ============================================================ */
-@media (min-resolution: 1.25dppx){
-  .media{ max-width:1024px; max-height:576px; }
-}
-@media (min-resolution: 1.5dppx){
-  .media{ max-width:853px; max-height:480px; }
-}
-@media (min-resolution: 2dppx){
-  .media{ max-width:640px; max-height:360px; }
+  /* On the pinned desktop the card column is right-aligned (not centred),
+     so recompute the full-bleed offset against the viewport-absolute card. */
+   .is-pinned .tech-ticker{
+     position:fixed;
+     left:0;
+     bottom:18px;
+     z-index:20;
+     width:100vw;
+     margin:0;
+   }
 }
 
 /* ============================================================
@@ -929,6 +1000,7 @@ img{ max-width:100%; }
                 Scroll for Animation
               </p>
             </div>
+
           </div>
         </article>
 
@@ -985,6 +1057,13 @@ img{ max-width:100%; }
 </div>
         </article>
 
+      </div>
+
+      <div class="tech-ticker" aria-label="Technology stack">
+        <div class="tech-ticker__track">
+          <span>C#/.NET ✦ SQL SERVER ✦ AZURE ✦ REACT ✦ DOCKER ✦ OPC-UA ✦ SAP INTEGRATIONS ✦ WMS ✦ LGV FLEETS ✦ JENKINS ✦&nbsp;</span>
+          <span aria-hidden="true">C#/.NET ✦ SQL SERVER ✦ AZURE ✦ REACT ✦ DOCKER ✦ OPC-UA ✦ SAP INTEGRATIONS ✦ WMS ✦ LGV FLEETS ✦ JENKINS ✦&nbsp;</span>
+        </div>
       </div>
 
       <!-- ============ MINIMAL CONTROLS ============ -->
@@ -1227,6 +1306,14 @@ img{ max-width:100%; }
       </div>
 
       <div class="links">
+        <a class="link" href="Resume/Ayush_Shrestha_SoftwareDeveloper_Resume.pdf" target="_blank" rel="noopener noreferrer" aria-label="View Ayush Shrestha's resume (opens in a new tab)">
+          <span class="link__ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          </span>
+          <span class="link__txt"><small>Resume</small><span>View resume</span></span>
+          <svg class="link__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
+        </a>
+
         <a class="link" href="https://github.com/iamayushshrestha" target="_blank" rel="noopener noreferrer">
           <span class="link__ico" aria-hidden="true">
             <svg viewBox="0 0 24 24"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
@@ -1367,12 +1454,12 @@ img{ max-width:100%; }
     var dpr  = Math.min(window.devicePixelRatio || 1, 2);
     var w = Math.round(box.width  * dpr);
     var h = Math.round(box.height * dpr);
-    /* The CSS already caps this element's DISPLAY size at the source 1280x720
-       and centers it, so box*dpr is never larger than the frame's native
-       pixels — the buffer is a 1:1 or downsample of the source. That is what
-       kills the pixelation: we never draw a 1280x720 frame onto a larger box
-       and upscale it. No separate cap needed (and the old one inverted, which
-       shrank small boxes and re-blurred them). */
+    /* Cap total pixels: a 4K stage would otherwise allocate a huge buffer. */
+    var maxPx = 2560 * 1440;
+    if (w * h > maxPx) {
+      var k = Math.sqrt(maxPx / (w * h));
+      w = Math.round(w * k); h = Math.round(h * k);
+    }
     if (canvas.width !== w || canvas.height !== h) {
       canvas.width = w; canvas.height = h;
       lastIdx = -1;              /* force a repaint at the new size */
