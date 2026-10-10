@@ -116,7 +116,10 @@
 html{ background:var(--bg); overflow-x:hidden; }
 body{
   margin:0;
-  background:var(--bg);
+   background:
+     radial-gradient(ellipse at 14% 8%, rgba(34,197,94,.075), transparent 42%),
+     radial-gradient(ellipse at 88% 38%, rgba(59,91,219,.065), transparent 44%),
+     linear-gradient(180deg, #101014 0%, #0a0a0c 58%, #101014 100%);
   color:var(--text);
   font-family:var(--sans);
   font-size:clamp(1rem,.96rem + .2vw,1.0625rem);
@@ -517,10 +520,7 @@ img{ max-width:100%; }
 .offers{
   position:relative;
   padding:clamp(72px,12vw,150px) clamp(18px,5vw,64px);
-  background:
-    radial-gradient(70% 60% at 15% 0%, rgba(34,197,94,.07), transparent 60%),
-    radial-gradient(70% 60% at 85% 20%, rgba(124,58,237,.07), transparent 60%),
-    var(--bg-soft);
+  background:linear-gradient(180deg,rgba(16,20,26,.84),rgba(13,16,20,.78) 55%,rgba(16,20,26,.88));
   border-top:1px solid rgba(255,255,255,.07);
 }
 .offers__head{
@@ -534,39 +534,64 @@ img{ max-width:100%; }
 .offers__sub{ color:var(--text-muted); max-width:52ch; margin-top:16px; }
 
 .offer-grid{
-  max-width:1160px; margin-inline:auto;
-  display:grid; gap:clamp(22px,3vw,34px);
+  max-width:1320px; margin-inline:auto;
+  display:grid; gap:clamp(24px,3.2vw,42px);
   grid-template-columns:1fr;
 }
 @media (min-width:860px){ .offer-grid{ grid-template-columns:repeat(3,1fr); } }
+.offer{min-height:clamp(500px,42vw,590px);padding:clamp(32px,3.5vw,48px);gap:clamp(18px,2vw,24px)}
+.offer__art{height:clamp(132px,12vw,168px)}
+.offer__name{font-size:clamp(1.4rem,1.6vw,1.65rem)}
+.offer__body{font-size:1rem;max-width:42ch}
+.offer__list{gap:12px}
+@media (max-width:859px){.offer{min-height:0}}
 
 /* Glass card — same material as .glass elsewhere, plus a theme tint so each
    card still reads as its own thing. Everything is visible at rest; JS only
    adds motion. */
 .offer{
+  --theme:var(--t1);
+  --theme-soft:var(--t1-soft);
+  --pointer-x:50%; --pointer-y:50%;
   position:relative;
   isolation:isolate;
   overflow:hidden;
-  background:
-    linear-gradient(165deg, var(--theme-soft), transparent 58%),
-    var(--glass);
+  background:linear-gradient(165deg, var(--theme-soft), rgba(255,255,255,.025) 58%), var(--glass);
   color:var(--text);
   border:1px solid var(--hairline);
   border-radius:var(--r-lg);
-  backdrop-filter:blur(26px) saturate(1.5);
-  -webkit-backdrop-filter:blur(26px) saturate(1.5);
+  backdrop-filter:blur(22px) saturate(1.45);
+  -webkit-backdrop-filter:blur(22px) saturate(1.45);
   box-shadow:0 30px 70px -40px rgba(0,0,0,.85), 0 1px 0 rgba(255,255,255,.10) inset;
   padding:clamp(26px,3vw,34px);
   display:flex; flex-direction:column; gap:16px;
-  transition:transform var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+  transition:transform 420ms var(--ease), background 420ms var(--ease), border-color 420ms var(--ease), box-shadow 420ms var(--ease);
 }
+.offer::after,.project::after{
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  border-radius:inherit;
+  background:
+    radial-gradient(190px circle at var(--pointer-x) var(--pointer-y),rgba(180,233,255,.23),transparent 70%),
+    radial-gradient(closest-side circle at var(--pointer-x) var(--pointer-y),rgba(132,208,255,.18),transparent 100%);
+  opacity:0;
+  transform:scale(.92);
+  transition:opacity 260ms var(--ease),transform 520ms var(--ease);
+}
+.offer > *,.project > *{position:relative;z-index:1}
 @media (hover:hover){
-  .offer:hover{
-    transform:translateY(-4px);
+  .offer:hover,.offer:focus-within,.project:hover,.project:focus-within{
     border-color:var(--theme);
     box-shadow:0 40px 80px -40px rgba(0,0,0,.9), 0 1px 0 rgba(255,255,255,.16) inset;
   }
+  .offer:hover::after,.offer:focus-within::after,.project:hover::after,.project:focus-within::after{opacity:1;transform:scale(1.08)}
+  .offer:hover,.project:hover{animation:card-hover-breathe 1.8s ease-in-out infinite alternate}
 }
+@supports not (background:color-mix(in srgb, white, black)){
+  @media (hover:hover) and (pointer:fine){
+    .offer:hover .offer__art,.offer:focus-within .offer__art{filter:drop-shadow(0 0 18px rgba(155,215,255,.3))}
+  }
+}
+@keyframes card-hover-breathe{from{transform:translateY(-2px)}to{transform:translateY(-7px)}}
 /* themed watermark — faint theme glyph bleeding off the corner */
 .offer__mark{
   position:absolute; z-index:-1;
@@ -621,6 +646,33 @@ img{ max-width:100%; }
 .offer3{ --theme:var(--t3); --theme-soft:var(--t3-soft); }
 .project{ --theme:var(--t1); --theme-soft:var(--t1-soft); }
 
+/* Shared glass finish for the lower-page content, matching the intro card. */
+.offer::before,.project::before{z-index:2}
+.offer__mark,.offer__art,.offer__kicker,.offer__name,.offer__body,.offer__list,.project__media,.project__content{z-index:1}
+.offer__mark{position:absolute}
+.offer__art,.offer__kicker,.offer__name,.offer__body,.offer__list,.project__media,.project__content{position:relative}
+.offer__art,.offer__mark{transition:transform 500ms var(--ease),filter 500ms var(--ease)}
+.project__media img{transition:transform 650ms var(--ease),filter 650ms var(--ease)}
+@media (hover:hover) and (pointer:fine){
+  .offer:hover .offer__art,.offer:focus-within .offer__art{transform:translateZ(18px) scale(1.08);filter:drop-shadow(0 0 18px color-mix(in srgb,var(--theme) 38%,transparent))}
+  .offer:hover .offer__mark{transform:scale(1.12) rotate(5deg);opacity:.24}
+  .project:hover .project__media img,.project:focus-within .project__media img{transform:scale(1.055);filter:brightness(1.04) contrast(1.04) saturate(1.08)}
+}
+.offer::after,.project::after{mix-blend-mode:screen}
+.project__media{ border:1px solid rgba(255,255,255,.14); }
+.link{
+  background:var(--glass);
+  border-color:var(--hairline);
+  border-radius:var(--r-lg);
+  backdrop-filter:blur(22px) saturate(1.45);
+  -webkit-backdrop-filter:blur(22px) saturate(1.45);
+}
+.link:hover{ background:rgba(255,255,255,.09); }
+
+@media (prefers-reduced-motion:no-preference){
+  .offer,.project{ transform-style:preserve-3d; }
+}
+
 /* ============================================================
    6a-2. TECH TICKER
    ============================================================ */
@@ -660,10 +712,7 @@ img{ max-width:100%; }
 .projects{
   position:relative;
   padding:clamp(72px,12vw,150px) clamp(18px,5vw,64px);
-  background:
-    radial-gradient(70% 60% at 15% 0%, rgba(34,197,94,.07), transparent 60%),
-    radial-gradient(70% 60% at 85% 20%, rgba(124,58,237,.07), transparent 60%),
-    var(--bg-soft);
+  background:linear-gradient(160deg,rgba(16,20,26,.84),rgba(13,16,20,.76) 58%,rgba(16,20,26,.88));
   border-top:1px solid rgba(255,255,255,.07);
 }
 .projects__head{
@@ -684,21 +733,23 @@ img{ max-width:100%; }
 @media (min-width:860px){ .project-grid{ grid-template-columns:repeat(2,1fr); } }
 
 .project{
+  --theme:var(--t1);
+  --theme-soft:var(--t1-soft);
+  --pointer-x:50%; --pointer-y:50%;
   position:relative;
   isolation:isolate;
   overflow:hidden;
-  background:
-    linear-gradient(165deg, var(--theme-soft), transparent 58%),
-    var(--glass);
+  background:linear-gradient(165deg, var(--theme-soft), rgba(255,255,255,.025) 58%), var(--glass);
   color:var(--text);
   border:1px solid var(--hairline);
   border-radius:var(--r-lg);
-  backdrop-filter:blur(26px) saturate(1.5);
-  -webkit-backdrop-filter:blur(26px) saturate(1.5);
+  backdrop-filter:blur(22px) saturate(1.45);
+  -webkit-backdrop-filter:blur(22px) saturate(1.45);
   box-shadow:0 30px 70px -40px rgba(0,0,0,.85), 0 1px 0 rgba(255,255,255,.10) inset;
   padding:clamp(26px,3vw,34px);
   display:flex; flex-direction:column; gap:16px;
-  transition:transform var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+  min-width:0;
+  transition:transform 420ms var(--ease), background 420ms var(--ease), border-color 420ms var(--ease), box-shadow 420ms var(--ease);
 }
 @media (hover:hover){
   .project:hover{
@@ -775,7 +826,7 @@ img{ max-width:100%; }
 .contact{
   position:relative;
   border-top:1px solid rgba(255,255,255,.08);
-  background:var(--bg-soft);
+  background:rgba(13,16,20,.78);
 }
 .contact__inner{
   max-width:1160px; margin-inline:auto;
@@ -797,12 +848,12 @@ img{ max-width:100%; }
 .link{
   display:flex; align-items:center; gap:20px;
   min-height:76px; padding:20px 26px;
-  background:rgba(255,255,255,.045);
-  border:1px solid rgba(255,255,255,.14);
-  border-radius:var(--r-md);
+  background:var(--glass);
+  border:1px solid var(--hairline);
+  border-radius:var(--r-lg);
   text-decoration:none; cursor:pointer;
-  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
-  transition:transform var(--dur) var(--ease), background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+  backdrop-filter:blur(22px) saturate(1.45); -webkit-backdrop-filter:blur(22px) saturate(1.45);
+  transition:transform 420ms var(--ease), background 420ms var(--ease), border-color 420ms var(--ease);
 }
 .link:hover{ transform:translateY(-2px); background:rgba(255,255,255,.09); border-color:rgba(34,197,94,.42); }
 .link__ico{
@@ -870,7 +921,7 @@ img{ max-width:100%; }
    }
 }
 
-/* ============================================================
+  /* ============================================================
    9. REDUCED MOTION — everything lands on its final state
    ============================================================ */
 @media (prefers-reduced-motion:reduce){
@@ -885,6 +936,40 @@ img{ max-width:100%; }
   .media__canvas{ display:none; }
   .media__poster{ opacity:1 !important; }
   .is-live .media__poster{ opacity:1 !important; }
+  .offers::before,.projects::before,.contact::before{transform:none!important}
+  .offers::after,.projects::after,.contact::after{transform:none!important}
+  .project-grid{perspective:none!important}
+  .project{transform:none!important;opacity:1!important;filter:none!important}
+  .offer:hover,.project:hover{animation:none!important;transform:none!important}
+}
+
+/* ============================================================
+   9a. SCROLL + POINTER-REACTIVE AMBIENT FIELD
+   ============================================================ */
+.offers,.projects,.contact{position:relative;isolation:isolate;overflow:hidden}
+.offers::before,.projects::before,.contact::before{
+  content:"";position:absolute;inset:-22% -8%;z-index:0;pointer-events:none;
+  opacity:.52;
+  background:
+    radial-gradient(ellipse at 18% 38%,rgba(66,150,208,.12),transparent 30%),
+    radial-gradient(ellipse at 82% 72%,rgba(71,113,191,.09),transparent 34%);
+  transform:translate3d(0,var(--section-drift,0px),0);
+  will-change:transform;
+}
+.offers::after,.projects::after,.contact::after{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.34;
+  background-image:linear-gradient(105deg,transparent 0 46%,rgba(190,225,255,.62) 49%,rgba(190,225,255,.10) 52%,transparent 56%);
+  background-size:150px 100%;
+  background-repeat:repeat-x;
+  background-position:0 0;
+  mask-image:linear-gradient(180deg,transparent,#000 12%,#000 88%,transparent);
+  transform:translate3d(var(--rain-x,0px),var(--rain-y,0px),0);
+  will-change:transform;
+}
+.offers__head,.offer-grid,.projects__head,.project-grid,.contact__inner,.colophon{position:relative;z-index:1}
+@media (prefers-reduced-motion:reduce){
+  .offers::before,.projects::before,.contact::before,.offers::after,.projects::after,.contact::after{transform:none!important}
+  .offers::after,.projects::after,.contact::after{animation:none!important}
 }
 
 /* ============================================================
@@ -1353,6 +1438,8 @@ img{ max-width:100%; }
   var pageBar = document.getElementById('pageBar');
   var playBtn = document.getElementById('playPause');
   var offers  = [].slice.call(document.querySelectorAll('.offer'));
+  var projects = [].slice.call(document.querySelectorAll('.project'));
+  var revealTargets = [].slice.call(document.querySelectorAll('.offers__head, .projects__head, .offer, .project, .contact__inner > div'));
 
   var hasGSAP = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
   var pinned  = root.classList.contains('is-pinned') && hasGSAP;
@@ -1642,40 +1729,106 @@ img{ max-width:100%; }
   }
 
   /* ==========================================================
-     OFFER CARDS
-     Each entrance is bound to its OWN element position (not a
-     hardcoded offset), so it fires exactly where the card is
-     actually visible. Alternate sides so none can be missed.
+     LOWER PAGE REVEALS + POINTER TILT
+     Soft, reusable reveal motion and restrained cursor response;
+     content remains visible if scripting/GSAP is unavailable.
      ========================================================== */
   if (hasGSAP && motion) {
     gsap.registerPlugin(ScrollTrigger);
 
-    offers.forEach(function (card, i) {
-      var fromRight = (i % 2 === 1);
-      gsap.set(card, {
-        xPercent: fromRight ? 118 : -118,
-        opacity: 0
-      });
-
-      gsap.timeline({
-        /* start when the card is 86% up the viewport, finish when it is
-           comfortably inside — never before it is seen, never after it has
-           passed. Both values are viewport-relative, so they hold at any size. */
-        scrollTrigger: {
-          id: 'offer-' + (i + 1),
-          trigger: card,
-          start: 'top 86%',
-          end: 'top 34%',
-          scrub: 0.4
+    revealTargets.forEach(function (el, i) {
+      gsap.fromTo(el,
+        { y: 18, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.55, ease: 'power2.out', delay: (i % 3) * 0.045,
+          scrollTrigger: {
+            id: 'section-reveal-' + i,
+            trigger: el,
+            start: 'top 88%',
+            toggleActions: 'play none none reverse'
+          }
         }
-      })
-      .to(card, { xPercent: 0, opacity: 1, ease: 'power3.out' })
-      .from(card.querySelectorAll('.offer__art, .offer__kicker, .offer__name, .offer__body, .offer__list li'),
-            { y: 16, opacity: 0, duration: 0.4, stagger: 0.05, ease: 'power2.out' }, 0);
+      );
     });
-  } else if (hasGSAP) {
-    /* reduced motion: final state, nothing staged offscreen */
-    gsap.set(offers, { clearProps: 'all' });
+
+    /* Subtle rain field reacts to pointer and scroll; only the lower sections
+       participate, leaving the hero sequence entirely untouched. */
+    var ambientSections = [].slice.call(document.querySelectorAll('.offers, .projects, .contact'));
+    if (ambientSections.length && window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
+      var ambientFrame = 0, pendingX = 0, pendingY = 0;
+      ambientSections.forEach(function (section) {
+        section.addEventListener('pointermove', function (event) {
+          pendingX = ((event.clientX / window.innerWidth) * 2 - 1) * 22;
+          pendingY = -((event.clientY / window.innerHeight) * 2 - 1) * 18;
+          if (ambientFrame) return;
+          ambientFrame = requestAnimationFrame(function () {
+            ambientFrame = 0;
+            gsap.to(section, {
+              '--rain-x': (pendingX * -0.55) + 'px', '--rain-y': (pendingY * -0.55) + 'px',
+              duration: 0.38, ease: 'power2.out', overwrite: true
+            });
+          });
+        });
+        section.addEventListener('pointerleave', function () {
+          gsap.to(section, {
+            '--rain-x': '0px', '--rain-y': '0px',
+            duration: 0.55, ease: 'power3.out', overwrite: true
+          });
+        });
+      });
+    }
+
+    /* The ambient field eases toward the current scroll phase, like the
+       site-wide Three.js field on Other.html; no independent rain loop. */
+    var ambientScrollFrame = 0;
+    function updateAmbientField() {
+      ambientScrollFrame = 0;
+      var maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      var progress = clamp(window.scrollY / maxScroll, 0, 1);
+      var driftX = (progress - 0.5) * 72;
+      var driftY = (progress - 0.5) * 54;
+      ambientSections.forEach(function (section, i) {
+        var dir = i % 2 ? -1 : 1;
+        gsap.to(section, {
+          '--section-drift': (driftY * dir) + 'px',
+          '--rain-x': (driftX * dir) + 'px',
+          duration: 0.6, ease: 'power2.out', overwrite: true
+        });
+      });
+    }
+    window.addEventListener('scroll', function () {
+      if (!ambientScrollFrame) ambientScrollFrame = requestAnimationFrame(updateAmbientField);
+    }, { passive: true });
+    updateAmbientField();
+
+    var tiltCards = offers.concat(projects);
+    if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
+      tiltCards.forEach(function (card) {
+        var tiltTween;
+        card.addEventListener('pointermove', function (event) {
+          var rect = card.getBoundingClientRect();
+          var x = (event.clientX - rect.left) / rect.width - 0.5;
+          var y = (event.clientY - rect.top) / rect.height - 0.5;
+          card.style.setProperty('--pointer-x', ((x + 0.5) * 100) + '%');
+          card.style.setProperty('--pointer-y', ((y + 0.5) * 100) + '%');
+          if (tiltTween) tiltTween.kill();
+          tiltTween = gsap.to(card, {
+            rotationY: x * 2.2,
+            rotationX: y * -2.2,
+            duration: 0.45,
+            ease: 'power2.out',
+            transformPerspective: 900,
+            overwrite: true
+          });
+        });
+        card.addEventListener('pointerleave', function () {
+          if (tiltTween) tiltTween.kill();
+          tiltTween = gsap.to(card, {
+            rotationX: 0, rotationY: 0,
+            duration: 0.5, ease: 'power3.out', overwrite: true
+          });
+        });
+      });
+    }
   }
 
   /* ==========================================================
