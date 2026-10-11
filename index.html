@@ -8,6 +8,9 @@
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0a0a0c">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0a0c'/%3E%3Cpath d='M9 23 15.5 9h1.6L23 23h-2.6l-1.4-3.4h-4.9L12.6 23Z' fill='%23ffffff'/%3E%3Ccircle cx='22.5' cy='9' r='2' fill='%2322c55e'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles/particles.css">
+<link rel="stylesheet" href="styles/timeline.css">
+  <link rel="stylesheet" href="styles/techstack.css">
 
 <!-- GSAP first: the bootstrap below feature-detects it before first paint. -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -520,7 +523,7 @@ img{ max-width:100%; }
 .offers{
   position:relative;
   padding:clamp(72px,12vw,150px) clamp(18px,5vw,64px);
-  background:linear-gradient(180deg,rgba(16,20,26,.84),rgba(13,16,20,.78) 55%,rgba(16,20,26,.88));
+  background:linear-gradient(180deg,#0d0f12,#0a0b0e 55%,#0d0f12);
   border-top:1px solid rgba(255,255,255,.07);
 }
 .offers__head{
@@ -712,7 +715,7 @@ img{ max-width:100%; }
 .projects{
   position:relative;
   padding:clamp(72px,12vw,150px) clamp(18px,5vw,64px);
-  background:linear-gradient(160deg,rgba(16,20,26,.84),rgba(13,16,20,.76) 58%,rgba(16,20,26,.88));
+  background:linear-gradient(180deg,#0d0f12,#0a0b0e 58%,#0d0f12);
   border-top:1px solid rgba(255,255,255,.07);
 }
 .projects__head{
@@ -955,19 +958,17 @@ img{ max-width:100%; }
 /* ============================================================
    9a. SCROLL + POINTER-REACTIVE AMBIENT FIELD
    ============================================================ */
-.offers,.projects,.contact{position:relative;isolation:isolate;overflow:hidden}
+ .offers,.projects,.contact,.career{position:relative;isolation:isolate;overflow:hidden;background:#0a0a0c!important}
 .offers::before,.projects::before,.contact::before{
   content:"";position:absolute;inset:-22% -8%;z-index:0;pointer-events:none;
-  opacity:.52;
-  background:
-    radial-gradient(ellipse at 18% 38%,rgba(66,150,208,.12),transparent 30%),
-    radial-gradient(ellipse at 82% 72%,rgba(71,113,191,.09),transparent 34%);
+  opacity:0;
+  background:none;
   transform:translate3d(0,var(--section-drift,0px),0);
   will-change:transform;
 }
 .offers::after,.projects::after,.contact::after{
-  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.34;
-  background-image:linear-gradient(105deg,transparent 0 46%,rgba(190,225,255,.62) 49%,rgba(190,225,255,.10) 52%,transparent 56%);
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;opacity:0;
+  background-image:none;
   background-size:150px 100%;
   background-repeat:repeat-x;
   background-position:0 0;
@@ -989,7 +990,67 @@ img{ max-width:100%; }
        <noscript> support.
    ============================================================ */
 .no-js .preloader{ display:none !important; }
-.no-js .controls{ display:none; }
+  .no-js .controls{ display:none; }
+
+/* ============================================================
+   CAREER TIMELINE + INTERACTIVE LOWER-PAGE BACKDROP
+   ============================================================ */
+.career{position:relative;isolation:isolate;overflow:hidden;padding:clamp(72px,11vw,138px) clamp(18px,5vw,64px);border-top:1px solid rgba(255,255,255,.08);background:#0a0a0c!important}
+.career::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(300px circle at var(--pointer-x,50%) var(--pointer-y,50%),rgba(34,197,94,.2),transparent 72%);opacity:0;transition:opacity 180ms ease;mask-image:none}
+.career.has-pointer::before{opacity:1}
+.career__inner{max-width:1160px;margin:auto}
+.career__head{max-width:700px;margin-bottom:clamp(42px,7vw,76px)}
+.career__title{font-size:clamp(2rem,1.1rem + 3vw,3.35rem);line-height:1.04;font-weight:300;letter-spacing:-.035em;margin-top:14px;text-wrap:balance}
+.career__sub{max-width:54ch;color:var(--text-muted);margin-top:17px}
+.career__layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(230px,.62fr);gap:clamp(36px,7vw,96px);align-items:start}
+.career__timeline{position:relative;display:grid;gap:14px}
+.career__timeline::before{content:"";position:absolute;left:15px;top:20px;bottom:20px;width:1px;background:linear-gradient(var(--accent),rgba(125,211,252,.22),transparent)}
+.career-stop{position:relative;display:grid;grid-template-columns:32px minmax(0,1fr);gap:17px;align-items:start;padding:18px 20px 20px 0;border:1px solid transparent;border-radius:18px;transition:background 260ms var(--ease),border-color 260ms var(--ease),transform 260ms var(--ease)}
+.career-stop:hover,.career-stop:focus-within{background:rgba(10,20,25,.5);border-color:rgba(255,255,255,.18);box-shadow:0 12px 38px -28px rgba(34,197,94,.42);transform:translateX(4px)}
+.career-stop__node{position:relative;z-index:1;width:12px;height:12px;margin:6px 0 0 10px;border-radius:50%;background:#0d1115;border:2px solid var(--accent);box-shadow:0 0 16px var(--glow)}
+.career-stop__date{font-size:.72rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--accent)}
+.career-stop__title{margin-top:5px;font-size:1.14rem;font-weight:500;line-height:1.3}
+.career-stop__org{margin-top:4px;color:#c2cad3;font-size:.91rem}
+.career-stop__detail{margin-top:9px;max-width:58ch;color:var(--text-muted);font-size:.88rem;line-height:1.6}
+.career__signal{position:sticky;top:110px;padding:26px;border:1px solid rgba(255,255,255,.14);border-radius:24px;background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.018));backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 26px 80px -46px rgba(0,0,0,.9)}
+.career__signal-label{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim)}
+.career__signal-value{display:block;margin:8px 0 2px;color:#fff;font-size:clamp(2.5rem,5vw,4.2rem);line-height:1;font-weight:300;letter-spacing:-.06em}
+.career__signal-caption{font-size:.88rem;color:var(--text-muted)}
+.career__meter{height:4px;margin:22px 0 16px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.career__meter span{display:block;width:80%;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--accent),#7dd3fc);box-shadow:0 0 18px var(--glow);transform-origin:left;animation:career-meter 1.4s var(--ease) both}
+@keyframes career-meter{from{transform:scaleX(.08)}to{transform:scaleX(1)}}
+.career__note{color:var(--text-soft);font-size:.88rem}
+.career__tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.career__tags span{padding:6px 10px;border:1px solid rgba(255,255,255,.12);border-radius:99px;color:var(--text-muted);font-size:.72rem}
+.career__nav{display:flex;gap:8px;margin-top:22px}
+.career__nav a{display:inline-flex;align-items:center;min-height:40px;padding:8px 13px;border:1px solid rgba(255,255,255,.14);border-radius:99px;text-decoration:none;font-size:.78rem;color:var(--text-soft);transition:background 200ms ease,border-color 200ms ease}
+.career__nav a:hover{background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.42)}
+.contact{background:linear-gradient(180deg,#0d0f12,#0a0b0e 60%,#0d0f12)}
+@media(max-width:760px){.career__layout{grid-template-columns:1fr}.career__signal{position:relative;top:auto}.career-stop{padding-right:12px}}
+@media(prefers-reduced-motion:reduce){.career__signal span{animation:none}.career-stop{transition:none}}
+
+/* Keep the lower sections visually unified while maintaining card separation. */
+.offers,.projects,.contact,.career{background:#0a0a0c!important;background-image:none!important}
+.offers::before,.projects::before,.contact::before{opacity:0;background:none}
+.offers::after,.projects::after,.contact::after{opacity:0}
+.offers,.projects,.contact{--pointer-x:50%;--pointer-y:50%}
+.offers::before,.projects::before,.contact::before{inset:0!important;transform:none!important;opacity:0!important;background:radial-gradient(220px circle at var(--pointer-x,50%) var(--pointer-y,50%),rgba(34,197,94,.2),transparent 72%)!important;transition:opacity 180ms ease}
+.offers.has-pointer::before,.projects.has-pointer::before,.contact.has-pointer::before{opacity:1!important}
+.offers::after,.projects::after,.contact::after{inset:0!important;transform:none!important;opacity:0!important;background-image:radial-gradient(2px 2px at var(--pointer-x,50%) var(--pointer-y,50%),rgba(255,255,255,.08),transparent 100%)!important;background-size:100% 100%!important;background-repeat:no-repeat!important;background-position:0 0!important}
+.offers.has-pointer::after,.projects.has-pointer::after,.contact.has-pointer::after{opacity:.35!important}
+.offer,.project{opacity:1!important;filter:none!important}
+.offers__head,.projects__head,.offer,.project,.career__head,.career-stop,.career__signal,.contact .section-header,.contact-terminal,.contact-card{visibility:visible!important}
+.offer{background:linear-gradient(165deg,var(--theme-soft),rgba(255,255,255,.045) 58%),rgba(18,20,24,.94);border-color:rgba(255,255,255,.2);box-shadow:0 30px 70px -40px rgba(0,0,0,.78),0 1px 0 rgba(255,255,255,.12) inset}
+.project{background:linear-gradient(165deg,var(--theme-soft),rgba(255,255,255,.045) 58%),rgba(18,20,24,.94);border-color:rgba(255,255,255,.2);box-shadow:0 30px 70px -40px rgba(0,0,0,.78),0 1px 0 rgba(255,255,255,.12) inset}
+.offer__body,.offer__list li,.project__desc,.project__highlights li{color:#c6c8d0}
+.offer__name,.project__name{color:#fff}
+
+.career__head,.career__layout{position:relative;z-index:1}
+.career__signal{z-index:1}
+.career::after{content:none}
+.offers.has-pointer::before,.projects.has-pointer::before,.contact.has-pointer::before{opacity:1}
+.offers.has-pointer::after,.projects.has-pointer::after,.contact.has-pointer::after{opacity:.65}
+.career__head,.career__layout{z-index:2}
 </style>
 
 <noscript>
@@ -1028,6 +1089,7 @@ img{ max-width:100%; }
   <a class="masthead__mark" href="#top"><span class="masthead__dot" aria-hidden="true"></span>Ayush Shrestha</a>
   <nav class="masthead__nav" aria-label="Primary">
     <a href="#offers">What I do</a>
+    <a href="#career">Career</a>
     <a href="#projects">Projects</a>
     <a href="#contact">Contact</a>
     <a href="https://github.com/iamayushshrestha" target="_blank" rel="noopener noreferrer">GitHub</a>
@@ -1180,10 +1242,62 @@ img{ max-width:100%; }
     </div>
   </section>
 
+  <!-- ============ CAREER TIMELINE ============ -->
+  <section class="career" id="career" aria-labelledby="career-title">
+    <div class="career__inner">
+      <header class="career__head">
+        <p class="eyebrow"><b>05</b> <s>/</s> Career timeline</p>
+        <h2 class="career__title" id="career-title">From warehouse systems to what’s next.</h2>
+        <p class="career__sub">A practical path through production software, performance work, enterprise integrations, and hands-on exploration of applied AI.</p>
+      </header>
+      <div class="career__layout">
+        <div class="career__timeline" aria-label="Career highlights">
+          <article class="career-stop">
+            <span class="career-stop__node" aria-hidden="true"></span><div>
+              <p class="career-stop__date">5+ years · ongoing</p><h3 class="career-stop__title">Warehouse Management Systems</h3>
+              <p class="career-stop__org">C# / .NET · live industrial operations</p>
+              <p class="career-stop__detail">Engineering and supporting 24/7 WMS applications that coordinate warehouse operations and LGV fleets.</p>
+            </div>
+          </article>
+          <article class="career-stop">
+            <span class="career-stop__node" aria-hidden="true"></span><div>
+              <p class="career-stop__date">Performance milestone</p><h3 class="career-stop__title">SQL maintenance optimization</h3>
+              <p class="career-stop__org">Legacy job diagnosis and rewrite</p>
+              <p class="career-stop__detail">Reduced a recurring maintenance job from 15 minutes to 3 minutes—an 80% execution-time reduction.</p>
+            </div>
+          </article>
+          <article class="career-stop">
+            <span class="career-stop__node" aria-hidden="true"></span><div>
+              <p class="career-stop__date">Enterprise integration</p><h3 class="career-stop__title">ERP &amp; fleet transitions</h3>
+              <p class="career-stop__org">SAP · JD Edwards · Manhattan · REST/XML</p>
+              <p class="career-stop__detail">Connected warehouse software with enterprise platforms and delivered WMS logic updates for a fleet-wide battery transition.</p>
+            </div>
+          </article>
+          <article class="career-stop">
+            <span class="career-stop__node" aria-hidden="true"></span><div>
+              <p class="career-stop__date">Current focus</p><h3 class="career-stop__title">Applied AI exploration</h3>
+              <p class="career-stop__org">LLMs · agents · practical prototypes</p>
+              <p class="career-stop__detail">Building small experiments to explore how adaptive workflows can extend reliable, rule-based systems.</p>
+            </div>
+          </article>
+        </div>
+        <aside class="career__signal" aria-label="Career impact highlight">
+          <p class="career__signal-label">Measured impact</p>
+          <strong class="career__signal-value">80%</strong>
+          <p class="career__signal-caption">less SQL job execution time</p>
+          <div class="career__meter" aria-hidden="true"><span></span></div>
+          <p class="career__note">15 minutes → 3 minutes<br>Practical improvements in production systems.</p>
+          <div class="career__tags" aria-label="Focus areas"><span>Reliability</span><span>Integration</span><span>Performance</span></div>
+          <nav class="career__nav" aria-label="Career section links"><a href="#projects">Explore projects</a><a href="#contact">Get in touch</a></nav>
+        </aside>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ OFFER CARDS ============ -->
   <section class="offers" id="offers" aria-label="What I do">
     <div class="offers__head">
-      <p class="eyebrow"><b>05</b> <s>/</s> What I do</p>
+        <p class="eyebrow"><b>06</b> <s>/</s> What I do</p>
       <h2 class="offers__title">Three things I work on.</h2>
       <p class="offers__sub">
         Each one runs on the same foundation: deterministic systems that stay up
@@ -1327,7 +1441,7 @@ img{ max-width:100%; }
   <!-- ============ PROJECT SHOWCASE ============ -->
   <section class="projects" id="projects" aria-label="Projects">
     <div class="projects__head">
-      <p class="eyebrow"><b>06</b> / Projects</p>
+        <p class="eyebrow"><b>07</b> / Projects</p>
       <h2 class="projects__title">Selected work.</h2>
       <p class="projects__sub">
         A few things I've built — each one solving a real problem with clean, maintainable code.
@@ -1393,7 +1507,7 @@ img{ max-width:100%; }
   <section class="contact" id="contact">
     <div class="contact__inner">
       <div class="section-header reveal">
-          <p class="eyebrow"><b>07</b> <s>/</s> Contact</p>
+          <p class="eyebrow"><b>08</b> <s>/</s> Contact</p>
           <h2 class="contact__title">Let's build reliable systems.</h2>
           <div class="contact__rule" aria-hidden="true"></div>
           <p class="contact__sub">Open to exciting opportunities and interesting problems, wherever they are.</p>
@@ -1456,7 +1570,7 @@ img{ max-width:100%; }
   var playBtn = document.getElementById('playPause');
   var offers  = [].slice.call(document.querySelectorAll('.offer'));
   var projects = [].slice.call(document.querySelectorAll('.project'));
-  var revealTargets = [].slice.call(document.querySelectorAll('.offers__head, .projects__head, .offer, .project, .contact .section-header, .contact-terminal, .contact-card'));
+   var revealTargets = [].slice.call(document.querySelectorAll('.career__head, .career-stop, .career__signal, .offers__head, .projects__head, .offer, .project, .contact .section-header, .contact-terminal, .contact-card'));
 
   var hasGSAP = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
   var pinned  = root.classList.contains('is-pinned') && hasGSAP;
@@ -1773,24 +1887,38 @@ img{ max-width:100%; }
       gsap.fromTo(el,
         { y: 18, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.55, ease: 'power2.out', delay: (i % 3) * 0.045,
+          onComplete: function () { gsap.set(el, { clearProps: 'opacity,transform,filter' }); },
           scrollTrigger: {
             id: 'section-reveal-' + i,
             trigger: el,
-            start: 'top 88%',
-            toggleActions: 'play none none reverse'
+            start: 'top 94%',
+            toggleActions: 'play none none none',
+            once: true
           }
         }
       );
     });
 
+    window.setTimeout(function () {
+      revealTargets.forEach(function (el) {
+        if (!el.style.opacity || el.style.opacity === '0') el.style.opacity = '1';
+      });
+    }, 1200);
+
     /* Subtle rain field reacts to pointer and scroll; only the lower sections
        participate, leaving the hero sequence entirely untouched. */
-    var ambientSections = [].slice.call(document.querySelectorAll('.offers, .projects, .contact'));
-    if (ambientSections.length && window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
-      var ambientFrame = 0, pendingX = 0, pendingY = 0;
-      ambientSections.forEach(function (section) {
-        section.addEventListener('pointermove', function (event) {
-          pendingX = ((event.clientX / window.innerWidth) * 2 - 1) * 22;
+     var ambientSections = [].slice.call(document.querySelectorAll('.career, .offers, .projects, .contact'));
+     if (ambientSections.length && window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
+       var ambientFrame = 0, pendingX = 0, pendingY = 0;
+        ambientSections.forEach(function (section) {
+          section.addEventListener('pointermove', function (event) {
+            var rect = section.getBoundingClientRect();
+            section.classList.add('has-pointer');
+             var pointerX = event.clientX - rect.left;
+             var pointerY = event.clientY - rect.top;
+             section.style.setProperty('--pointer-x', pointerX + 'px');
+             section.style.setProperty('--pointer-y', pointerY + 'px');
+            pendingX = ((event.clientX / window.innerWidth) * 2 - 1) * 22;
           pendingY = -((event.clientY / window.innerHeight) * 2 - 1) * 18;
           if (ambientFrame) return;
           ambientFrame = requestAnimationFrame(function () {
@@ -1801,8 +1929,9 @@ img{ max-width:100%; }
             });
           });
         });
-        section.addEventListener('pointerleave', function () {
-          gsap.to(section, {
+         section.addEventListener('pointerleave', function () {
+           section.classList.remove('has-pointer');
+           gsap.to(section, {
             '--rain-x': '0px', '--rain-y': '0px',
             duration: 0.55, ease: 'power3.out', overwrite: true
           });
