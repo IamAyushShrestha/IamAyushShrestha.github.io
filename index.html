@@ -733,7 +733,47 @@ img{ max-width:100%; }
   display:grid; gap:clamp(22px,3vw,34px);
   grid-template-columns:1fr;
 }
-@media (min-width:860px){ .project-grid{ grid-template-columns:repeat(2,1fr); } }
+.project-grid{
+  grid-auto-columns:minmax(0,1fr);
+  grid-auto-flow:column;
+  grid-template-columns:none;
+  overflow-x:auto;
+  overscroll-behavior-inline:contain;
+  scroll-snap-type:x mandatory;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(255,255,255,.3) transparent;
+  padding:4px 2px 18px;
+  scroll-padding-inline:2px;
+  align-items:center;
+  perspective:1100px;
+}
+.project-grid::-webkit-scrollbar{height:7px}
+.project-grid::-webkit-scrollbar-track{background:rgba(255,255,255,.06);border-radius:999px}
+.project-grid::-webkit-scrollbar-thumb{background:rgba(255,255,255,.28);border-radius:999px}
+.project-grid::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.46)}
+.project-grid > .project{
+  min-width:0;
+  scroll-snap-align:center;
+  transform:scale(.88);
+  opacity:.62;
+  filter:saturate(.75) brightness(.8);
+  transition:transform 420ms var(--ease),opacity 420ms var(--ease),filter 420ms var(--ease),box-shadow 420ms var(--ease);
+}
+.project-grid > .project.is-focused{transform:scale(1);opacity:1;filter:none;z-index:2}
+@media (min-width:860px){
+  .project-grid{grid-auto-columns:calc((100% - clamp(22px,3vw,34px))/2)}
+}
+@media (max-width:859px){
+  .project-grid{grid-auto-columns:88%;padding-inline:6%}
+  .project-grid > .project{transform:scale(.92)}
+}
+@media (prefers-reduced-motion:no-preference){
+  .project-grid{scroll-behavior:smooth}
+}
+@media (prefers-reduced-motion:reduce){
+  .project-grid{scroll-snap-type:x proximity}
+  .project-grid > .project{transition:none;transform:none;opacity:1;filter:none}
+}
 
 .project{
   --theme:var(--t1);
@@ -1448,7 +1488,7 @@ img{ max-width:100%; }
       </p>
     </div>
 
-    <div class="project-grid">
+    <div class="project-grid" aria-label="Project carousel" tabindex="0">
       <!-- PROJECT 1: Browse Record -->
       <article class="project">
         <div class="project__media">
@@ -1499,6 +1539,32 @@ img{ max-width:100%; }
         </div>
       </article>
       <!-- End of PROJECT 2 -->
+
+      <!-- PROJECT 3: PlantDownRca Collector -->
+      <article class="project">
+        <div class="project__media">
+          <img src="assets/PlantDownRcaCollector.gif" alt="PlantDownRca Collector — configure an incident window, collect logs, and build a merged RCA timeline" width="1280" height="720" loading="lazy">
+        </div>
+        <div class="project__content">
+          <p class="project__kicker">Industrial diagnostics</p>
+          <h3 class="project__name">PlantDownRca Collector</h3>
+          <p class="project__desc">
+            A portable, read-only Windows tool that gathers plant-down incident evidence from application, SQL Server, Kepware, and Windows Event Logs into one chronological report.
+          </p>
+          <ul class="project__highlights">
+            <li><b>Offline &amp; no-install</b> — self-contained .NET Framework 4.8 app with no service or outbound calls</li>
+            <li><b>Unified RCA evidence</b> — normalizes, sorts, deduplicates, and tags events across sources</li>
+            <li><b>Multi-server workflow</b> — collect locally, then merge run packages into a cross-server timeline</li>
+          </ul>
+          <div class="project__links">
+            <a class="project__link" href="https://github.com/IamAyushShrestha/PlantDownRcaCollector" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+              <span>View on GitHub</span>
+            </a>
+          </div>
+        </div>
+      </article>
+      <!-- End of PROJECT 3 -->
 
     </div>
   </section>
@@ -1991,6 +2057,62 @@ img{ max-width:100%; }
         });
       });
     }
+  }
+
+  /* Wheel over the project rail advances one card per notch in either
+     direction. Native touch, keyboard, horizontal trackpad, and scrollbar
+     interaction remain available as well. */
+  var projectRail = document.querySelector('.project-grid');
+  if (projectRail) {
+    var projectCards = [].slice.call(projectRail.querySelectorAll('.project'));
+    var projectWheelLocked = false;
+    var projectFocusFrame = 0;
+
+    function updateFocusedProject() {
+      projectFocusFrame = 0;
+      var railRect = projectRail.getBoundingClientRect();
+      var centerX = railRect.left + railRect.width / 2;
+      var closest = null;
+      var closestDistance = Infinity;
+      projectCards.forEach(function (card) {
+        var rect = card.getBoundingClientRect();
+        var distance = Math.abs((rect.left + rect.width / 2) - centerX);
+        if (distance < closestDistance) {
+          closest = card;
+          closestDistance = distance;
+        }
+      });
+      projectCards.forEach(function (card) {
+        card.classList.toggle('is-focused', card === closest);
+      });
+    }
+
+    function requestFocusedProjectUpdate() {
+      if (!projectFocusFrame) projectFocusFrame = requestAnimationFrame(updateFocusedProject);
+    }
+
+    projectRail.addEventListener('scroll', requestFocusedProjectUpdate, { passive: true });
+    window.addEventListener('resize', requestFocusedProjectUpdate, { passive: true });
+    requestFocusedProjectUpdate();
+
+    projectRail.addEventListener('wheel', function (event) {
+      if (!projectCards.length) return;
+      var delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+      if (Math.abs(delta) < 2) return;
+      var current = projectCards.findIndex(function (card) { return card.classList.contains('is-focused'); });
+      if (current < 0) current = 0;
+      var next = Math.max(0, Math.min(projectCards.length - 1, current + (delta > 0 ? 1 : -1)));
+      if (next === current) return;
+
+      /* Consume wheel input only while there is another project to reveal.
+         At either end, leave the event unhandled so the page can continue. */
+      event.preventDefault();
+      if (!projectWheelLocked) {
+        projectWheelLocked = true;
+        projectCards[next].scrollIntoView({ behavior: motion ? 'smooth' : 'auto', block: 'nearest', inline: 'center' });
+        window.setTimeout(function () { projectWheelLocked = false; }, 420);
+      }
+    }, { passive: false });
   }
 
   /* ==========================================================
